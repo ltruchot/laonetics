@@ -1,0 +1,28 @@
+{
+  "name": "laonetics",
+  "version": "0.0.1",
+  "license": "CC-BY-NC-4.0",
+  "author": "Loïc TRUCHOT",
+  "description": "Get english/french karaoke for any word of lao language.",
+  "private": true,
+  "engines": {
+    "node": "~8.0.0",
+    "npm": "~5.0.0"
+  },
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "prepublish": "typings install",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --hot --inline --port 5000 --contentBase './'"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "ts-loader": "^2.2.1",
+    "tslint": "^5.4.3",
+    "typescript": "^2.4.1",
+    "typings": "^2.1.1",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
+  }
+}
