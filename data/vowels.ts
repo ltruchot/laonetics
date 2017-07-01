@@ -1,8 +1,13 @@
+import { consonants } from './consonants';
 const vowels = {
 	trailingƆX: {
 		followPart: 'ັ?ອ[ງກມນຍວດບ]',
 		xອx: { en: 'ɔ:', fr: 'ɔ:'},
 		xັອx: { en: 'ɔ', fr: 'ɔ'}
+	},
+	trailingAX: {
+		followPart: 'ັ[' + consonants.trailing + '][ແເໂໄໃ|' + consonants.leading + '|\w\s]',
+		xັx: { en: 'a', fr: 'â'}
 	},
 	trailingFollowX: {
 		followPart: '[ິີຶືຸູ][ງກມນຍວດບ]',
@@ -37,7 +42,7 @@ const vowels = {
 		ໃx: { en: 'ai', fr: 'ay'}
 	},
 	follow: {
-		followPart: '[ໍິີຶືຸູະ]',
+		followPart: '[ໍິີຶືຸູາະ]',
 		xໍ: { en: 'ɔ:', fr: 'ɔ:'},
 		xິ: { en: 'ee', fr: 'i'},
 		xີ: { en: 'ee:', fr: 'i:'},
@@ -45,6 +50,7 @@ const vowels = {
 		xື: { en: 'ue:', fr: 'ü:'},
 		xຸ: { en: 'oo', fr: 'ou'},
 		xູ: { en: 'oo:', fr: 'ou:'},
+		xາ: { en: 'a:', fr: 'â:'},
 		xະ: { en: 'a', fr: 'â'}
 	}
 }

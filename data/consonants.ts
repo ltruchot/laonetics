@@ -1,5 +1,7 @@
 const consonants = {
-	all: '[ກງສນມບດຈຕພລ]',
+	all: '[ກງສນມບດຈຕພລຢ]',
+	leading: 'ກງສນມບດຈຕພລຢ',
+	trailing: 'ງກມນຍວດບ',
 	ກ: {
 		leading: { en: 'k', fr: 'k' },
 		trailing: { en: 'k', fr: 'k' }
@@ -38,6 +40,9 @@ const consonants = {
 	},
 	ລ: {
 		leading: { en: 'l', fr: 'l' }
+	},
+	ຢ: {
+		leading: { en: 'y', fr: 'y' }
 	}
 };
 export { consonants };
