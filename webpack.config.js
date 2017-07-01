@@ -15,7 +15,7 @@ module.exports = {
   module: {
     loaders: [
       // all files with a '.ts'  extension will be handled by `ts-loader`
-       { test: /\.ts?$/, loader: 'ts-loader' }
+      { test: /\.ts?$/, loader: 'ts-loader' }
     ]
   },
   plugins: [

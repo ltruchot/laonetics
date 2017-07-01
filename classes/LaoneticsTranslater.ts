@@ -1,46 +1,39 @@
+import { vowels } from './../data/vowels';
+import { consonants } from './../data/consonants';
+import { IConsonant } from './../interfaces/interfaces';
+
 export class LaoneticsTranslater {
-	private vowels = {
-		arround: {
-			all: 'ເ',
-			follow: '[ິີ]',
-			ເxີ: { en: 'oe:', fr: 'eu:'},
-			ເxິ: { en: 'oe', fr: 'eu'},
-		},
-		left: {
-			all: '[ແເໂໄໃ]',
-			ແx: { en: 'ae:', fr: 'è:'},
-			ແxະ: { en: 'ae', fr: 'è'},
-			ເx: { en: 'e:', fr: 'é:'},
-			ເxະ: { en: 'e', fr: 'é'},
-			ໂx: { en: 'o:', fr: 'ô:'},
-			ໂxະ: { en: 'o', fr: 'ô'},
-			ໄx: { en: 'ai', fr: 'ay'},
-			ໃx: { en: 'ai', fr: 'ay'}
-		},
-		top: {
-			all: '[ໍິີຶືົ]'
-		}
-	}
-	private consonants = {
-		all: '[ນມບດ]',
-		ນ: { en: 'n', fr: 'n' },
-		ມ: { en: 'm', fr: 'm' },
-		ບ: { en: 'b', fr: 'b' },
-		ດ: { en: 'd', fr: 'd' },
-	};
+	private vowels = vowels;
+	private consonants = consonants;
 	private accents = '[່້໌]?';
 	private shortMark = 'ະ?';
-	private lang = 'fr';
-	replaceSentence (sentence: string, lang?: string): string {
+	private currentLang = 'fr';
+	getKaraoke (sentence: string, lang?: string): string {
+		// register current lang
+		this.currentLang = lang || this.currentLang;
+
+		// remove accents
 		sentence = sentence.replace(new RegExp(this.accents, 'gi'), '')
-		sentence = this.replacePart(sentence, 'arround');
+
+		// complexity ordered replacement, syllables by syllables
+		sentence = this.replacePart(sentence, 'trailingƆX');
+		sentence = this.replacePart(sentence, 'trailingFollowX');
+		sentence = this.replacePart(sentence, 'topLeft');
+		sentence = this.replacePart(sentence, 'topRight');
 		sentence = this.replacePart(sentence, 'left');
+		sentence = this.replacePart(sentence, 'follow');
+
+		// return fully replaced sentence
 		return sentence;
 	}
+
 	replacePart (sentence: string, location: string): string {
 		const vowels = this.vowels[location];
-		let syllables = vowels.all + this.consonants.all + (vowels.follow || '');
-		let reg = new RegExp(syllables + this.shortMark, 'gi');
+		const leftPart = vowels.leftPart || ''
+		const followPart = vowels.followPart || ''
+		let regSyllables = leftPart + this.consonants.all + followPart;
+		console.log(regSyllables);
+		let reg = new RegExp(regSyllables + this.shortMark, 'gi');
 		const matches = sentence.match(reg) || [];
 		matches.forEach(syllable => {
 			let kk = this.toKaraoke(syllable, location);
@@ -48,28 +41,52 @@ export class LaoneticsTranslater {
 		})
 		return sentence;
 	}
+
 	toKaraoke(syllable: string, location: string): string {
 		// console.log(syllable, location)
 		let vowel: string;
 		let consonant: string;
-		let shortMark: boolean;
+		let trailingPart = '';
+		let consonant2: IConsonant;
+		console.log(syllable.split('').join(' / '));
 		switch (location) {
-			case 'arround':
-				vowel = syllable[0] + 'x' + syllable[2]
-				consonant = syllable[1]
-				shortMark = true
+			case 'trailingƆX':
+				vowel = 'x' + (syllable[1] === 'ັ' ? syllable[1] + syllable[2] : syllable[1]) + 'x';
+				consonant = syllable[0]
+				consonant2 = this.consonants[syllable[syllable.length - 1]];
+				trailingPart = (consonant2 && consonant2.trailing && consonant2.trailing[this.currentLang]) || '';
+				break;
+			case 'trailingFollowX':
+				vowel = 'x' + syllable[1];
+				consonant = syllable[0]
+				consonant2 = this.consonants[syllable[2]];
+				console.log('consonant2', consonant2)
+				trailingPart = (consonant2 && consonant2.trailing && consonant2.trailing[this.currentLang]) || '';
+				break;
+			case 'topRight':
+				vowel = 'x' + syllable[1] + syllable[2]
+				consonant = syllable[0]
+				break;
+			case 'topLeft':
+				vowel = syllable[0] + 'x' + syllable[2] + (syllable[3] || '');
+				consonant = syllable[1];
 				break;
 			case 'left':
 				vowel = syllable[0] + 'x' + (syllable[2] || '');
 				consonant = syllable[1];
 				break;
+			case 'follow':
+				vowel = 'x' + syllable[1];
+				consonant = syllable[0];
+				break;
 		}
-		console.log(vowel, consonant);
-		let finalConsonant = this.consonants[consonant] && this.consonants[consonant][this.lang];
-		let finalVowel = this.vowels[location][vowel] && this.vowels[location][vowel][this.lang];
+		console.log('c:', consonant, 'v:', vowel);
+		location = this.vowels[location].base || location;
+		let finalConsonant = this.consonants[consonant] && this.consonants[consonant].leading[this.currentLang];
+		let finalVowel = this.vowels[location][vowel] && this.vowels[location][vowel][this.currentLang];
 		if (!finalConsonant || !finalVowel) {
-			console.error('ERROR: impossible to understand', syllable);
+			console.error('ERROR: impossible to understand', syllable, finalConsonant, finalVowel);
 		}
-		return finalConsonant + finalVowel;
+		return finalConsonant + finalVowel + trailingPart +  ' ';
 	}
 };

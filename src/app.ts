@@ -1,7 +1,10 @@
 import { LaoneticsTranslater} from './../classes/LaoneticsTranslater';
 const translater = new LaoneticsTranslater();
 const htmlIn = <HTMLInputElement>document.getElementById('in');
-const htmlOut = <HTMLSpanElement>document.getElementById('out');
+const htmlOutFr = <HTMLSpanElement>document.getElementById('out-fr');
+const htmlOutEn = <HTMLSpanElement>document.getElementById('out-en');
 let laoSentence = htmlIn.value;
-let kkSentence = translater.replaceSentence(laoSentence, 'fr');
-htmlOut.innerText = kkSentence;
+let kkSentenceFr = translater.getKaraoke(laoSentence, 'fr');
+let kkSentenceEn = translater.getKaraoke(laoSentence, 'en');
+htmlOutFr.innerText = kkSentenceFr;
+htmlOutEn.innerText = kkSentenceEn;
