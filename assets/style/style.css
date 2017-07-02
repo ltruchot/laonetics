@@ -21,11 +21,19 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	font-style: normal;
 }
-input {
+textarea {
 	padding:10px;
 	display: block;
-	width:90%;
-	margin:auto;
+	width:100%;
+	min-height:400px;
 	font-size: 1.2rem;
 	font-family: Phetsarath_OT;
+}
+.container {
+	width:90%;
+	margin:auto;
+}
+button {
+	display: block;
+	margin: 10px 0;
 }

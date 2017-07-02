@@ -12,12 +12,15 @@
   "main": "index.html",
   "scripts": {
     "prepublish": "typings install",
+    "update": "rm -rf node_modules && npm cache verify && npm i",
+    "release": "webpack",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --hot --inline --port 5000 --contentBase './'"
   },
   "keywords": [],
   "devDependencies": {
     "copy-webpack-plugin": "^4.0.1",
+    "express": "^4.15.3",
     "ts-loader": "^2.2.1",
     "tslint": "^5.4.3",
     "typescript": "^2.4.1",

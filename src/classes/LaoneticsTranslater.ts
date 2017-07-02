@@ -1,49 +1,49 @@
-import { vowels } from './../data/vowels';
-import { consonants } from './../data/consonants';
-import { IConsonant } from './../interfaces/interfaces';
-console.log(consonants.all + vowels.trailingAX.followPart)
-console.log(consonants.all + vowels.trailingƆX.followPart)
+import { vowels } from './../values/vowels';
+import { consonants } from './../values/consonants';
+import { phonemes } from './../values/phonemes';
+import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
 	private accents = '[່້໌]?';
-	private shortMark = 'ະ?';
 	private currentLang = 'fr';
-	getKaraoke (sentence: string, lang?: string): string {
+	private sep = '-#@#-'; // an arbitrary separation string, to cut the string phoneme by phoneme
+	private sentenceLao: string;
+	private sentenceKaraoke: string;
+	getKaraoke (sentence: string, lang?: string): ISlicedSyllables {
 		// register current lang
 		this.currentLang = lang || this.currentLang;
 
-		// remove accents
-		sentence = sentence.replace(new RegExp(this.accents, 'gi'), '')
+		// remove accents in sentence
+		this.sentenceLao = sentence.replace(new RegExp(this.accents, 'gi'), '');
+		this.sentenceKaraoke = this.sentenceLao;
 
-		// complexity ordered replacement, syllables by syllables
-		sentence = this.replacePart(sentence, 'trailingƆX');
-		sentence = this.replacePart(sentence, 'trailingAX');
-		sentence = this.replacePart(sentence, 'trailingFollowX');
-		sentence = this.replacePart(sentence, 'topLeft');
-		sentence = this.replacePart(sentence, 'topRight');
-		sentence = this.replacePart(sentence, 'left');
-		sentence = this.replacePart(sentence, 'follow');
-
-		// return fully replaced sentence
-		return sentence;
-	}
-
-	replacePart (sentence: string, location: string): string {
-		const currentVowels = vowels[location];
-		const leftPart = currentVowels.leftPart || ''
-		const followPart = currentVowels.followPart || ''
-		let regSyllables = leftPart + consonants.all + followPart;
-		let reg = new RegExp(regSyllables + this.shortMark, 'gi');
-		const matches = sentence.match(reg) || [];
-		console.log('matches', matches)
-		matches.forEach(syllable => {
-			let match = this.toKaraoke(syllable, location);
-			sentence = sentence.replace(match.syllable, match.karaoke);
+		// complexity ordered replacement, phoneme by phoneme
+		phonemes.forEach((item: IPhonemeReg) => {
+			this.replacePart(item);
 		})
-		return sentence;
+
+		// remove last separation
+		const lastSep = new RegExp(this.sep + '\s*$');
+		this.sentenceLao = this.sentenceLao.replace(lastSep, '')
+		this.sentenceKaraoke = this.sentenceKaraoke.replace(lastSep, '')
+
+		// return fully sliced & replaced sentences, as 2 arrays
+		return {
+			lao: this.sentenceLao.split(this.sep),
+			karaoke: this.sentenceKaraoke.split(this.sep)
+		};
 	}
 
-	toKaraoke(syllable: string, location: string) {
+	replacePart (item: IPhonemeReg): void {
+		const matches = this.sentenceLao.match(new RegExp(item.reg, 'gi')) || [];
+		matches.forEach(syllable => {
+			let match = this.toKaraoke(syllable, item.name);
+			this.sentenceLao = this.sentenceLao.replace(match.phonemeLao, match.phonemeLao + this.sep);
+			this.sentenceKaraoke = this.sentenceKaraoke.replace(match.phonemeLao, match.phonemeKaraoke + this.sep);
+		})
+	}
+
+	toKaraoke (syllable: string, location: string) {
 		// console.log(syllable, location)
 		let vowel: string;
 		let consonant: string;
@@ -87,16 +87,15 @@ export class LaoneticsTranslater {
 				consonant = syllable[0];
 				break;
 		}
-		console.log('c:', consonant, 'v:', vowel, 'ex:', trailingPart);
-		location = vowels[location].base || location;
+		console.log(location, 'c:', consonant, 'v:', vowel, 'ex:', trailingPart);
 		let finalConsonant = consonants[consonant] && consonants[consonant].leading[this.currentLang];
-		let finalVowel = vowels[location][vowel] && vowels[location][vowel][this.currentLang];
+		let finalVowel = vowels[vowel] && vowels[vowel][this.currentLang];
 		if (!finalConsonant || !finalVowel) {
 			console.error('ERROR: impossible to understand', syllable, finalConsonant, finalVowel);
 		}
 		return {
-			karaoke: finalConsonant + finalVowel + trailingPart +  ' - ',
-			syllable: syllable
+			phonemeKaraoke: finalConsonant + finalVowel + trailingPart,
+			phonemeLao: syllable
 		};
 	}
 };

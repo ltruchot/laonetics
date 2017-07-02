@@ -1,5 +1,4 @@
 var path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'app.ts'),
   output: {
@@ -17,10 +16,5 @@ module.exports = {
       // all files with a '.ts'  extension will be handled by `ts-loader`
       { test: /\.ts?$/, loader: 'ts-loader' }
     ]
-  },
-  plugins: [
-    new CopyWebpackPlugin([
-      { from: './assets', to: 'assets' }
-    ])
-  ]
+  }
 }

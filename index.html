@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <title>Laonetics by Loïc TRUCHOT</title>
-    <link rel="stylesheet" href="assets/style/style.css">
+    <meta name="description" content="Get Lao language phonetic, french karaoke and english karaoke for any phoneme/syllable." />
+    <title>Laonetics by ໂລໂລ: a smart Lao karaoke</title>
+    <link rel="stylesheet" type="text/css" href="/assets/style/style.css">
 </head>
 
 <body>
-		<h1>Laonetics</h1>
-		<h2>by Loïc TRUCHOT</h2>
-		<div>
-			<input id="in" value="ພໍ່ແມ່ຕໍາຈອກກັບໂລໂລແລະກັບສອນມະນີ, ກັອກຢາສູບ, ເຈົ້າແດ່. ແບ້ະໃມ່ໄມໂມເດເດິ້ໃຈເດີ້" /><br />
-			French: <span id="out-fr"></span><br />
-			English: <span id="out-en"></span><br />
-			<span>TODO: ເບື່ອ</span>
+		<div class="container">
+			<h1>Laonetics: a smart Lao karaoke</h1>
+			<h3>
+				Playground - Alpha version 0.0.1 -
+				<a href="https://github.com/n-a-n/laonetics">@see git repo</a>
+			</h3>
+			<h3>by ໂລໂລ (Loïc TRUCHOT) - license CC-BY-NC-4.0</h3>
+			<div>
+				<textarea id="in">ພໍ່ແມ່ຕໍາຈອກກັບໂລໂລແລະກັບສອນມະນີ</textarea>
+				<!-- currently working on exemple: ກັອກຢາສູບ, ເຈົ້າແດ່. ແບ້ະໃມ່ໄມໂມເດເດິ້ໃຈເດີ້, ປະກາດການສອບເສັງເຂົ້າຮຽນຢູ່ ມະຫາວິທະຍາໄລ ວິທະຍາສາດ ສຸຂະພາບ (ມວສ)." ໃໝ່ -->
+			</div>
+			<div><button id="btn-translate">Translate</button></div>
+			<div>
+				<strong>French:</strong> <span id="out-fr"></span>
+				<hr />
+				<strong>English:</strong> <span id="out-en"></span><br />
+				<hr />
+				<strong>Phonetic:</strong> <span id="out-ph"></span><br />
+			</div>
 		</div>
     <script src="/assets/script/bundle.js"></script>
 </body>

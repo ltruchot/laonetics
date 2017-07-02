@@ -2,7 +2,7 @@
 
 Current version: Alpha v0.0.1 "Smart lao language karaoke".
 
-Running here: [laolol.com](http://laolol.com)
+Running here: [laonetics.io](http://laonetics.io)
 
 
 Laonetics is a Typescript/Javascript component to convert lao chars in english/french phonetic forms, aka karaoke.
@@ -16,6 +16,8 @@ Transparent & agile project management: [Trello](https://trello.com/b/L3XSHsjL/l
 
 ## Development watch && serve
 
-Run `npm i && npm start` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.
+Run `npm run update && npm start` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.
+
+Run `npm run update && node server.js` for a prod server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
 
 
