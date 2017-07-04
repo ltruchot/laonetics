@@ -4,7 +4,7 @@ import { phonemes } from './../values/phonemes';
 import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
-	private accents = '[່້໌]?';
+	private accents = '[່້໌໊໋]?';
 	private currentLang = 'fr';
 	private sep = '-#@#-'; // an arbitrary separation string, to cut the string phoneme by phoneme
 	private sentenceLao: string;
@@ -27,6 +27,8 @@ export class LaoneticsTranslater {
 		this.sentenceLao = this.sentenceLao.replace(lastSep, '')
 		this.sentenceKaraoke = this.sentenceKaraoke.replace(lastSep, '')
 
+		// ໆ
+
 		// return fully sliced & replaced sentences, as 2 arrays
 		return {
 			lao: this.sentenceLao.split(this.sep),
@@ -36,7 +38,14 @@ export class LaoneticsTranslater {
 
 	replacePart (item: IPhonemeReg): void {
 		const matches = this.sentenceLao.match(new RegExp(item.reg, 'gi')) || [];
+		if (item.name === 'trailingFollowX') {
+			console.log('trailingFollowX')
+			console.log(item.reg)
+		}
 		matches.forEach(syllable => {
+			if (item.name === 'trailingFollowX') {
+				console.log(syllable)
+			}
 			let match = this.toKaraoke(syllable, item.name);
 			this.sentenceLao = this.sentenceLao.replace(match.phonemeLao, match.phonemeLao + this.sep);
 			this.sentenceKaraoke = this.sentenceKaraoke.replace(match.phonemeLao, match.phonemeKaraoke + this.sep);
@@ -51,11 +60,18 @@ export class LaoneticsTranslater {
 		let extra: IConsonant;
 		// console.log(syllable.split('').join(' / '));
 		switch (location) {
-			case 'trailingƆX':
+			case 'trailingSpecialX':
 				vowel = 'x' + (syllable[1] === 'ັ' ? syllable[1] + syllable[2] : syllable[1]) + 'x';
 				consonant = syllable[0]
 				extra = consonants[syllable[syllable.length - 1]];
 				trailingPart = (extra && extra.trailing && extra.trailing[this.currentLang]) || '';
+				break;
+			case 'trailingLeftX':
+				vowel = syllable[2] === 'ັ' ? syllable[0] + 'x' + syllable[2] + 'x' : syllable[0] + 'x';
+				consonant = syllable[1]
+				extra = consonants[syllable[syllable[2] === 'ັ' ? 3 : 2]];
+				trailingPart = (extra && extra.trailing && extra.trailing[this.currentLang]) || '';
+				syllable = syllable.substr(0, syllable.length - 1)
 				break;
 			case 'trailingAX':
 				vowel = 'x' + syllable[1] + 'x';
@@ -87,11 +103,12 @@ export class LaoneticsTranslater {
 				consonant = syllable[0];
 				break;
 		}
-		console.log(location, 'c:', consonant, 'v:', vowel, 'ex:', trailingPart);
+		// console.log(location, 'c:', consonant, 'v:', vowel, 'ex:', trailingPart);
 		let finalConsonant = consonants[consonant] && consonants[consonant].leading[this.currentLang];
 		let finalVowel = vowels[vowel] && vowels[vowel][this.currentLang];
-		if (!finalConsonant || !finalVowel) {
-			console.error('ERROR: impossible to understand', syllable, finalConsonant, finalVowel);
+		if (typeof finalConsonant === 'undefined' || typeof !finalVowel === 'undefined') {
+			console.log(location, 'c:', consonant, 'v:', vowel, 'ex:', trailingPart);
+			console.error('ERROR: impossible to understand', syllable, 'c:', finalConsonant, 'v:', finalVowel);
 		}
 		return {
 			phonemeKaraoke: finalConsonant + finalVowel + trailingPart,

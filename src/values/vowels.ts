@@ -1,10 +1,18 @@
 const vowels = {
-	// only "ɔx"
+	// only x+special+x
 	xອx: { en: 'ɔ:', fr: 'ɔ:'},
 	xັອx: { en: 'ɔ', fr: 'ɔ'},
+	xຽx: { en: 'ia:', fr: 'yâ:'},
+	xັຽx: { en: 'ia', fr: 'yâ'},
 
-	// only "ax"
+	// only left+x+x
+	ແxັx: { en: 'ae', fr: 'è'},
+	ເxັx: { en: 'e', fr: 'é'},
+
+
+	// only x+a+x
 	xັx: { en: 'a', fr: 'â'},
+	xົx: { en: 'o', fr: 'o'},
 
 	// left + follow
 	ເxີ: { en: 'oe:', fr: 'eu:'},
@@ -14,6 +22,7 @@ const vowels = {
 
 	// only "am"
 	xໍາ: { en: 'am', fr: 'âm'},
+	xຳ: { en: 'am', fr: 'âm'}, // here is the combined form of "am", not visible on every text editor
 
 	// left
 	ແx: { en: 'ae:', fr: 'è:'},
