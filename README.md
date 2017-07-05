@@ -1,6 +1,6 @@
 # Laonetics
 
-Current version: Alpha v0.0.2 "Smart lao language karaoke".
+Current version: Alpha v0.0.3 "Smart lao language karaoke".
 
 Running here: [laonetics.io](http://laonetics.io)
 
