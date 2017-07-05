@@ -140,7 +140,7 @@ var LaoneticsTranslater = (function () {
                 extra = consonants_1.consonants[syllable[syllable.length - 1]];
                 trailingPart = (extra && extra.trailing && extra.trailing[this.currentLang]) || '';
                 break;
-            case 'trailingAX':
+            case 'trailingOAX':
                 vowel = 'x' + syllable[1] + 'x';
                 consonant = syllable[0];
                 extra = consonants_1.consonants[syllable[2]];

@@ -1,6 +1,7 @@
 export interface IPhonetics {
 	fr: string;
 	en: string
+	ph: string;
 };
 export interface IConsonant {
 	leading: IPhonetics;
@@ -13,4 +14,5 @@ export interface ISlicedSyllables {
 export interface IPhonemeReg {
 	name: string;
 	reg: string;
+	overlapping?: boolean;
 }
