@@ -2,32 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Get Lao language phonetic, french karaoke and english karaoke for any phoneme/syllable." />
-    <title>Laonetics by ໂລໂລ: a smart Lao karaoke</title>
+    <meta name="description" content="Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable." />
+    <title>Laonetics: a smart Lao romanization and karaoke</title>
     <link rel="stylesheet" type="text/css" href="/assets/style/style.css">
 </head>
 
 <body>
 		<div class="container">
-			<h1>Laonetics: a smart Lao karaoke</h1>
+			<h1>Laonetics: a smart Lao romanization and karaoke</h1>
 			<h3>
-				Playground - Alpha version 0.0.3 -
+				Playground - Beta version 0.1.0 -
 				<a href="https://github.com/n-a-n/laonetics">@see git repo</a>
 			</h3>
 			<h3>by ໂລໂລ (Loïc TRUCHOT) - license CC-BY-NC-4.0</h3>
+			<h3>Laonetics is born as a part of <a href="http://laolol.com">Laolol, an app to learn lao/french/english while playing.</a></h3>
 			<div>
-				<textarea id="in">ການລົງຄະແນນສຽງຢູ່ສະພາຕໍ່າ ອີງຕາມຄຳໜັ້ນສັນຍາໂຄສະນາຫາສຽງຂອງ ປະທານາທິບໍດີທຣໍາ</textarea>
-
+				<textarea class="font-lao" id="in">ຫຼາຍໆຄົນຈະຖືເອົາວັນພັກນີ້ ພາກັນເດີນທາງໄປ
+ຢ້ຽມຢາມຍາດຕິພີ່ນ້ອງ ທີ່ຢູ່ຕ່າງລັດ ແລະ ບາງຄົນ ກໍຈະພາກັນໄປທ່ຽວທະເລ ແລະ
+ອີກສ່ວນນຶ່ງ ກໍຈະເດີນທາງມາຍັງນະຄອນຫຼວງ ວໍຊິງຕັນ ເພື່ອທ່ຽວຊົມຫໍພິພິທະພັນ
+ແລະ ເບິ່ງການຈູດບັ້ງໄຟດອກ ທີ່ສວຍສົດງົດງາມ ແລະຍິ່ງໃຫຍ່ໄປດ້ວຍແສງສີ ທີ່
+ເຕັ້ນກະພິບກະພັບໄປຕາມສຽງບັນເລງ ຂອງດົນຕີວົງໃຫຍ່ ແລະ ການສະແດງຄອນ
+ເສີດຕ່າງໆ ໂດຍບັນດານັກຮ້ອງຊື່ດັງຂອງສະຫະລັດ ຢູ່ໃນບໍລິເວນສະໜາມຫຼວງ.
+ແຕ່ສຳລັບວັດລາວພຸດທະວົງສ໌ ແລ້ວ ທາງຄະນະບໍລິຫານວັດ ໄດ້ຖືເອົາໂອກາດນີ້
+ຈັດງານໃຫຍ່ປະຈຳປີ ສະ ເຫຼີມສະຫຼອງວັນຊາດອາເມຣິກັນ ວັນນັດພົບເຫຼົ່າເຄືອຍາດ
+ໂດຍມີຈຸດປະສົງຫຼັກ 3 ປະການ ດັ່ງໄຊຈະເລີນ ຈະນຳເອົາລາຍລະອຽດມາສະເໜີທ່ານ
+ໃນອັນດັບຕໍ່ໄປ.</textarea>
 			</div>
-			<div><button id="btn-translate">Translate</button></div>
+			<div><button id="btn-translate">Romanize</button></div>
 			<div>
-				<strong>Lao:</strong> <span id="out-lo"></span>
+				<strong>Lao:</strong> <span class="font-lao" id="out-lo"></span>
 				<hr />
 				<strong>French:</strong> <span id="out-fr"></span>
 				<hr />
 				<strong>English:</strong> <span id="out-en"></span>
 				<hr />
-				<strong>Phonetic:</strong> <span id="out-ph"></span>
+				<strong>IPA (Phonetics):</strong> <span id="out-ph"></span>
 			</div>
 		</div>
     <script src="/assets/script/bundle.js"></script>

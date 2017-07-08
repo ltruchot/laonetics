@@ -1,58 +1,65 @@
 const vowels = {
-	// only x+special+x
-	xອx: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔ:'},
+	// only left 1 follow 2
+	ເxຶອ: { en: 'uea', fr: 'üa', ph: 'ɯə'},
+	ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},
+	ເxົາ: { en: 'ao', fr: 'ao', ph: 'aw'},
+	ເxາະ: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
+	ເxັຍ: { en: 'ia', fr: 'yâ', ph: 'iə'},
+
+	// trailing follow 2
 	xັອx: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
-	xຽx: { en: 'ia:', fr: 'yâ:', ph: ''},
-	xັຽx: { en: 'ia', fr: 'yâ', ph: ''},
+	xັຽx: { en: 'ia', fr: 'yâ', ph: 'iə'},
+	xັວx: { en: 'ooa', fr: 'oua', ph: 'uə'},
 
 	// only left+x+x
-	ແxັx: { en: 'ae', fr: 'è', ph: ''},
-	ເxັx: { en: 'e', fr: 'é', ph: ''},
+	ແxັ: { en: 'ae', fr: 'è', ph: 'ɛ'},
+	ເxັ: { en: 'e', fr: 'é', ph: 'e'},
 
 
-	// only x+a+x
-	xັx: { en: 'a', fr: 'â', ph: ''},
-	xົx: { en: 'o', fr: 'o', ph: ''},
+	// trailing follow 1
+	xຽx: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
+	xອx: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔ:'},
+	xວx: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
+	xັx: { en: 'a', fr: 'â', ph: 'a'},
+	xົx: { en: 'o', fr: 'ô', ph: 'o'},
 
 	// left + follow
-	ເxີ: { en: 'oe:', fr: 'eu:', ph: ''},
-	ເxິ: { en: 'oe', fr: 'eu', ph: ''},
-	ເxົາ: { en: 'ao', fr: 'ao', ph: ''},
-	ເxາະ: { en: 'ɔ', fr: 'ɔ', ph: ''},
+	ເxີ: { en: 'oe:', fr: 'eu:', ph: 'ɤː'},
+	ເxິ: { en: 'oe', fr: 'eu', ph: 'ɤ'},
+
+	// only follow 3
+	xົວະ: { en: 'ooa', fr: 'oua', ph: 'uə'},
+
+	// only follow 2
+	xົວ: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
+	xໍາ: { en: 'am', fr: 'âm', ph: 'am'},
 
 	// only "am"
-	xໍາ: { en: 'am', fr: 'âm', ph: ''},
-	xຳ: { en: 'am', fr: 'âm', ph: ''}, // here is the combined form of "am", not visible on every text editor
+	xຳ: { en: 'am', fr: 'âm', ph: 'am'}, // here is the combined form of "am", not visible on every text editor
 
 	// left
 	ແx: { en: 'ae:', fr: 'è:', ph: 'ɛː'},
 	ແxະ: { en: 'ae', fr: 'è', ph: 'ɛ'},
-	ເx: { en: 'e:', fr: 'é:', ph: ''},
-	ເxະ: { en: 'e', fr: 'é', ph: ''},
-	ໂx: { en: 'o:', fr: 'ô:', ph: ''},
-	ໂxະ: { en: 'o', fr: 'ô', ph: ''},
-	ໄx: { en: 'ai', fr: 'ay', ph: ''},
-	ໃx: { en: 'ai', fr: 'ay', ph: ''},
+	ເx: { en: 'e:', fr: 'é:', ph: 'e'},
+	ເxະ: { en: 'e', fr: 'é', ph: 'e'},
+	ໂx: { en: 'o:', fr: 'ô:', ph: 'o'},
+	ໂxະ: { en: 'o', fr: 'ô', ph: 'o'},
+	ໄx: { en: 'ai', fr: 'ay', ph: 'aj'},
+	ໃx: { en: 'ai', fr: 'ay', ph: 'aj'},
 
 	// follow
-	xໍ: { en: 'ɔ:', fr: 'ɔ:', ph: ''},
-	xິ: { en: 'ee', fr: 'i', ph: ''},
-	xີ: { en: 'ee:', fr: 'i:', ph: ''},
-	xຶ: { en: 'ue', fr: 'ü', ph: ''},
-	xື: { en: 'ue:', fr: 'ü:', ph: ''},
-	xຸ: { en: 'oo', fr: 'ou', ph: ''},
-	xູ: { en: 'oo:', fr: 'ou:', ph: ''},
+	xໍ: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔː'},
+	xິ: { en: 'ee', fr: 'i', ph: 'i'},
+	xີ: { en: 'ee:', fr: 'i:', ph: 'i:'},
+	xຶ: { en: 'ue', fr: 'ü', ph: 'ɯ'},
+	xື: { en: 'ue:', fr: 'ü:', ph: 'ɯː'},
+	xຸ: { en: 'oo', fr: 'ou', ph: 'u'},
+	xູ: { en: 'oo:', fr: 'ou:', ph: 'uː'},
 	xາ: { en: 'a:', fr: 'â:', ph: 'aː'},
-	xະ: { en: 'a', fr: 'â', ph: ''},
+	xະ: { en: 'a', fr: 'â', ph: 'a'},
 
 	// alone
 	x: { en: '', fr: '', ph: ''}
 
-
-	// todo
-	// ເxຶອ: { en: 'uea', fr: 'üa', ph: ''},
-	// ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: ''}
-	// ເxຍ
-	// ເxັຍ
 };
 export { vowels };

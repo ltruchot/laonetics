@@ -27,13 +27,15 @@ textarea {
 	width:100%;
 	min-height:400px;
 	font-size: 1.2rem;
-	font-family: Phetsarath_OT;
+}
+button {
+	display: block;
+	margin: 10px 0;
 }
 .container {
 	width:90%;
 	margin:auto;
 }
-button {
-	display: block;
-	margin: 10px 0;
+.font-lao {
+	font-family: Phetsarath_OT !important;
 }

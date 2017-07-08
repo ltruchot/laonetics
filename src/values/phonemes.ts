@@ -1,45 +1,86 @@
+// dependencies
 import { consonants } from './consonants';
 import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../interfaces/interfaces';
 
-const C_LEADING = 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ';
-const C_TRAILING = 'ງກມນຍວດບ';
-const V_LEFT = 'ແເໂໄໃ';
-const V_FOLLOW = 'ໍິີຶືຸູາ';
-const V_SPECIAL = 'ອຽ';
-const V_FOLLOW_COMPLEMENT = 'ະຳ' // don't remove this special invisible form of "am"
-const REG_BORDER = `[${V_LEFT}|${C_LEADING}|\w\s-]`
+// exported graphemes
+const graphemes = {
+	accents: '່້໌໊໋',
+	phantoms: '\\u200B\\u2022\\s', // word boundaries, visible or notinvisible in editors
+	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
+	cTrailing: 'ງກມນຍວດບ',
+	cຫ: 'ງຍນມລວຼ',
+	vFollow: 'ໍິີຶືຸູາ',
+	vLeft: 'ແເໂໄໃ',
+	vSpecial: 'ອຽ',
+	vFollowComplement: 'ະ\\u0EB3', // 2nd one is a special form of lao grapheme "am", invisible in editors
+};
 
+// exported regs
+const regs = {
+	accents: `[${graphemes.accents}]`,
+	phantoms: `[${graphemes.phantoms}]`,
+	leadingH: `ຫ[${graphemes.cຫ}]`,
+	reversedBoundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}])`,
+	rightBoundary: `[ໆ${graphemes.vLeft}|${graphemes.cLeading}|\\w\\b\-]`,
+	leadingAll: `(ຫ[${graphemes.cຫ}]|[${graphemes.cLeading}])`,
+	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
+}
+
+// exported phonemes
 const phonemes: Array<IPhonemeReg> = [
 	{
-		name: 'trailingSpecialX',
-		reg: `[${C_LEADING}]ັ?[${V_SPECIAL}][${C_TRAILING}]`
+		name: 'onlyFollow3',
+		reg: `${regs.leadingAll}ົວະ`
+	},
+	{
+		name: 'trailingFollow2',
+		reg: `${regs.leadingAll}ັ[${graphemes.vSpecial}ອ][${graphemes.cTrailing}]`
+	},
+	{
+		name: 'onlyFollow2',
+		reg: `${regs.leadingAll}(ໍາ|ັວ|ົວ)`
+	},
+	{
+		name: 'trailingFollow1',
+		reg: `${regs.leadingAll}[${graphemes.vSpecial}ັົວ][${graphemes.cTrailing}]`
+	},
+	{
+		name: 'specialLeftFollow2',
+		reg: `ເ${regs.leadingAll}ັຍ`
+	},
+	{
+		name: 'trailingLeftFollow2',
+		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ)[${graphemes.cTrailing}]`
+	},
+	{
+		name: 'onlyLeftFollow2',
+		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ|ົາ|າະ)`
 	}, {
-		name: 'trailingLeftX',
-		reg: `[ແເ][${C_LEADING}][${C_TRAILING}]ັ?${REG_BORDER}`,
-		overlapping: true
+		name: 'specialLeftFollow',
+		reg: `ເ${regs.leadingAll}ຍ`
 	}, {
-		name: 'trailingOAX',
-		reg: `[${C_LEADING}][ັົ][${C_TRAILING}]${REG_BORDER}`,
-		overlapping: true
+		name: 'trailingLeftFollow',
+		reg: `(ເ${regs.leadingAll}[ິີ|ັ]|ແ${regs.leadingAll}[ັ])[${graphemes.cTrailing}]`
 	}, {
-		name: 'trailingFollowX',
-		reg: `[${C_LEADING}][${V_FOLLOW}][${C_TRAILING}]${REG_BORDER}`,
-		overlapping: true
-	},  {
-		name: 'topLeft',
-		reg: `ເ[${C_LEADING}]([ິີາ]|ົາ)`
+		name: 'onlyLeftFollow',
+		reg: `(ເ${regs.leadingAll}[ິີ|ະ]|ແ${regs.leadingAll}[ະ])`
 	}, {
-		name: 'topRight',
-		reg: `[${C_LEADING}]ໍາ`
+		name: 'trailingLeft',
+		reg: `[${graphemes.vLeft}]${regs.leadingAll}[${graphemes.cTrailing}]`
 	}, {
-		name: 'left',
-		reg: `[${V_LEFT}][${C_LEADING}]ະ?`
+		name: 'onlyLeft',
+		reg: `[${graphemes.vLeft}]${regs.leadingAll}`
 	}, {
-		name: 'follow',
-		reg: `[${C_LEADING}][${V_FOLLOW}${V_FOLLOW_COMPLEMENT}]`
-	}/*, {
+		name: 'trailingFollow',
+		reg: `${regs.leadingAll}${regs.follow1Only}[${graphemes.cTrailing}]`
+	}, {
+		name: 'onlyFollow',
+		reg: `${regs.leadingAll}${regs.follow1Only}`
+	} /*, {
 		name: 'alone',
-		reg: `[${C_LEADING}]`
+		reg: `[${graphemes.cLeading}]`
 	}*/
 ];
-export { phonemes };
+
+// export shared objects
+export { phonemes, graphemes, regs };

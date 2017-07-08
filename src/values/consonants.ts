@@ -27,7 +27,14 @@ const consonants = {
 	ອ: { leading: { en: '', fr: '', ph: 'ʔ' } },
 	ຫ: { leading: { en: 'h', fr: 'h', ph: 'h' } },
 	ຮ: { leading: { en: 'h', fr: 'h', ph: 'h' } },
-	ໝ: { leading: { en: 'm', fr: 'm', ph: '' } },
-	ໜ: { leading: { en: 'n', fr: 'n', ph: '' } }
+	ໝ: { leading: { en: 'm', fr: 'm', ph: 'm' } },
+	ໜ: { leading: { en: 'n', fr: 'n', ph: 'n' } },
+	ຫງ: { leading: { en: 'ng', fr: 'ng', ph: 'ŋ' } },
+	ຫຍ: { leading: { en: 'ny', fr: 'ny', ph: 'ɲ' } },
+	ຫນ: { leading: { en: 'n', fr: 'n', ph: 'n' } },
+	ຫມ: { leading: { en: 'm', fr: 'm', ph: 'm' } },
+	ຫຼ: { leading: { en: 'l', fr: 'l', ph: 'l' } },
+	ຫລ: { leading: { en: 'l', fr: 'l', ph: 'l' } },
+	ຫວ: { leading: { en: 'v', fr: 'v', ph: 'ʋ' } }
 };
 export { consonants };
