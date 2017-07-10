@@ -17,6 +17,8 @@ export class LaoneticsTranslater {
 
 		// remove accents/'phantom unicodes' in sentence and copy value
 		this.sentenceLao = this.sentenceLao.replace(new RegExp(regs.removables, 'gimu'), '');
+		this.sentenceLao = this.sentenceLao.replace(/(\w+)/g, this.sep + '$1')
+		this.sentenceLao = this.sentenceLao.replace(/ໆ/g, this.sep + 'ໆ');
 
 		// copy a base sentence for every lang
 		this.langs.forEach(lang => {
@@ -30,14 +32,12 @@ export class LaoneticsTranslater {
 
 		// remove first separation & manage ໆ and preprare final chopped phonemes
 		this.sentenceLao = this.sentenceLao.replace(this.sep, '');
-		this.sentenceLao = this.sentenceLao.replace(/ໆ/g, this.sep + 'ໆ');
+
 		const phonemesLao = this.sentenceLao.split(this.sep);
 		this.sentences.forEach((currentSentence, i) => {
 			this.sentences[i] = currentSentence.replace(this.sep, '');
 			// exceptions
 			this.sentences[i] = this.sentences[i].replace(/y{2}/g, 'y'); // ຢຽມ double y case
-			this.sentences[i] = this.sentences[i].replace(/ໆ/g, this.sep + 'ໆ');
-
 			const romPhonemes = this.sentences[i].split(this.sep);
 			romPhonemes.forEach((phoneme, index) => {
 				if (phoneme === 'ໆ') {
