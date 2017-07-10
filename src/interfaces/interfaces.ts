@@ -9,7 +9,7 @@ export interface IConsonant {
 }
 export interface ISlicedSyllables {
 	lao: Array<string>;
-	langs: Array<Array<string>>;
+	roms: Array<Array<string>>;
 };
 export interface IPhonemeReg {
 	name: string;

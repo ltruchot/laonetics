@@ -5,7 +5,7 @@ import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../inte
 // exported graphemes
 const graphemes = {
 	accents: '່້໌໊໋',
-	phantoms: '\\u200B\\u2022\\s', // word boundaries, visible or notinvisible in editors
+	phantoms: '\\u200B\\u2022\\s.', // word boundaries, visible or notinvisible in editors
 	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
 	cTrailing: 'ງກມນຍວດບ',
 	cຫ: 'ງຍນມລວຼ',
@@ -17,11 +17,9 @@ const graphemes = {
 
 // exported regs
 const regs = {
-	accents: `[${graphemes.accents}]`,
-	phantoms: `[${graphemes.phantoms}]`,
+	removables: `[${graphemes.accents}${graphemes.phantoms}]`,
 	leadingH: `ຫ[${graphemes.cຫ}]`,
-	reversedBoundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}])`,
-	rightBoundary: `[ໆ${graphemes.vLeft}|${graphemes.cLeading}|\\w\\b\-]`,
+	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}])`,
 	leadingAll: `(ຫ[${graphemes.cຫ}]|[${graphemes.cLeading}])`,
 	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
 }
@@ -76,9 +74,9 @@ const phonemes: Array<IPhonemeReg> = [
 	}, {
 		name: 'onlyFollow',
 		reg: `${regs.leadingAll}${regs.follow1Only}`
-	} /*, {
+	}/* , {
 		name: 'alone',
-		reg: `[${graphemes.cLeading}]`
+		reg: `${regs.leadingAll}`
 	}*/
 ];
 

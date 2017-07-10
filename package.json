@@ -1,8 +1,8 @@
 {
   "name": "laonetics",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "CC-BY-NC-4.0",
-  "author": "Loïc TRUCHOT",
+  "author": "Loïc TRUCHOT <loic.truchot.pro@gmail.com> (http://laonetics.io)",
   "description": "",
   "private": true,
   "engines": {
