@@ -1,4 +1,4 @@
-const vowels = {
+const vowels: any = {
 	// only left 1 follow 2
 	ເxຶອ: { en: 'uea', fr: 'üa', ph: 'ɯə'},
 	ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},

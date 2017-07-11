@@ -1,5 +1,5 @@
-import { LaoneticsTranslater} from './classes/LaoneticsTranslater';
-import { IConsonant, ISlicedSyllables, IPhonetics } from './interfaces/interfaces';
+import { LaoneticsTranslater } from 'laonetics';
+import { IConsonant, ISlicedSyllables, IPhonetics } from 'laonetics';
 
 (() => {
 	const translater = new LaoneticsTranslater();
@@ -27,4 +27,3 @@ import { IConsonant, ISlicedSyllables, IPhonetics } from './interfaces/interface
 	const btnTranslate = <HTMLButtonElement>document.getElementById('btn-translate');
 	btnTranslate.addEventListener('click', translate, false);
 })();
-

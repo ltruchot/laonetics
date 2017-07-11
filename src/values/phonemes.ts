@@ -1,9 +1,8 @@
 // dependencies
-import { consonants } from './consonants';
-import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../interfaces/interfaces';
+import { IPhonemeReg } from './../interfaces/interfaces';
 
 // exported graphemes
-const graphemes = {
+const graphemes: any = {
 	accents: '່້໌໊໋',
 	phantoms: '\\u200B\\u2022\\s.', // word boundaries, visible or notinvisible in editors
 	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',

@@ -1,4 +1,5 @@
 export interface IPhonetics {
+	[key: string]: any;
 	fr: string;
 	en: string
 	ph: string;

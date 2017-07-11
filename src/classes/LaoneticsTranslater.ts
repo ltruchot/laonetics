@@ -1,7 +1,7 @@
 import { vowels } from './../values/vowels';
 import { consonants } from './../values/consonants';
 import { graphemes, regs, phonemes } from './../values/phonemes';
-import { IConsonant, ISlicedSyllables, IPhonetics, IPhonemeReg } from './../interfaces/interfaces';
+import { IConsonant, ISlicedSyllables, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
 	private sep = '-#@#-'; // an arbitrary separation string, to cut the string phoneme by phoneme
@@ -69,14 +69,14 @@ export class LaoneticsTranslater {
 		})
 	}
 
-	toKaraoke (syllable: string, phoneme: IPhonemeReg) {
+	toKaraoke (syllable: string, phoneme: IPhonemeReg): Array<string> {
 		// console.log('LaoneticsTranslater::toKaraoke', syllable, phoneme)
 		const location = phoneme.name;
 		let vowel: string;
 		let consonant: string;
 		let extra: IConsonant;
 		let isHX = false;
-		let finalMatches = [];
+		let finalMatches: Array<string> = [];
 
 		// remove useless last boundary group for overlapping phonemes then copy final syllable is ready
 		// syllable = syllable.substr(0, syllable.length - 1);

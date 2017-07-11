@@ -1,17 +1,30 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "removeComments": true,
-    "sourceMap": true,
-    "allowJs": true,
+    "allowJs": false,
+    "declaration": true,
     "lib": [
-      "es2017",
+      "es2015",
       "dom"
-    ]
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "sourceMap": true
   },
-  "exclude": [
-    "node_modules"
+  "files": [
+    "./src/laonetics.ts",
+    "./src/classes/LaoneticsTranslater.ts",
+    "./src/values/consonants.ts",
+    "./src/values/phonemes.ts",
+    "./src/values/consonants.ts",
+    "./src/interfaces/interfaces.ts"
   ],
-  "compileOnSave": false
+  "exclude": [
+    "node_modules",
+    "dist",
+    "demo"
+  ]
 }

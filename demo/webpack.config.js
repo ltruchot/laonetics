@@ -1,16 +1,10 @@
 var path = require('path')
-const PATHS = {
-  src: path.join(__dirname, './src'),
-  build: path.join(__dirname, './dist')
-}
 module.exports = {
-  entry: PATHS.src + '/laonetics.ts',
+  entry: path.resolve(__dirname, 'assets', 'script', 'main.ts'),
   output: {
-    path: PATHS.build,
-    filename: 'laonetics.min.js',
-    library: 'laonetics',
-    libraryTarget: 'umd'
+    filename: './assets/script/bundle.js'
   },
+
   devtool: 'source-map',
   resolve: {
     // Add '.ts' as a resolvable extension.
