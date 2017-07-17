@@ -24,8 +24,5 @@
     "typings": "^2.1.1",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
-  },
-  "dependencies": {
-    "laonetics": "^0.2.0"
   }
 }

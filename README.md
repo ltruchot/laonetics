@@ -1,11 +1,15 @@
 # Laonetics
 
+
+Laonetics is a Typescript/Javascript component to convert lao chars in english/french phonetic forms, aka karaoke.
+
+
 Install: `npm install --save laonetics`
 
 Import: `import { LaoneticsTranslater, ISlicedSyllables } from 'laonetics';`
 
 Use:
-```
+```typescript
 const translater = new LaoneticsTranslater();
 // exemple with rabbit word in lao: "ກະຕ່າຍ"
 let slicedSyllables: ISlicedSyllables = translater.getKaraoke('ກະຕ່າຍ', ['fr', 'en', 'ph']);
@@ -26,11 +30,6 @@ let slicedSyllables: ISlicedSyllables = translater.getKaraoke('ກະຕ່າ�
 Current version: Beta v0.2.0 "Smart lao language karaoke".
 
 Demo running here: [laonetics.io](http://laonetics.io)
-
-
-Laonetics is a Typescript/Javascript component to convert lao chars in english/french phonetic forms, aka karaoke.
-
-
 
 Licences: [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/): you can use/copy/modify any code but only without commercial intentions.
 

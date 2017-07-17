@@ -1,10 +1,11 @@
 import { vowels } from './../values/vowels';
 import { consonants } from './../values/consonants';
-import { graphemes, regs, phonemes } from './../values/phonemes';
+import { regs, phonemes } from './../values/phonemes';
 import { IConsonant, ISlicedSyllables, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
 	private sep = '-#@#-'; // an arbitrary separation string, to cut the string phoneme by phoneme
+	private subSep = '-##@##-';
 	private sentenceLao: string;
 	private roms: Array<Array<string>> = [];
 	private sentences: Array<string> = [];
@@ -31,6 +32,7 @@ export class LaoneticsTranslater {
 		})
 
 		// remove first separation & manage ໆ and preprare final chopped phonemes
+		this.sentenceLao = this.sentenceLao.replace(new RegExp(this.subSep, 'g'), '');
 		this.sentenceLao = this.sentenceLao.replace(this.sep, '');
 
 		const phonemesLao = this.sentenceLao.split(this.sep);
@@ -59,10 +61,12 @@ export class LaoneticsTranslater {
 		let reg = new RegExp(phoneme.reg + regs.boundary, 'gimu');
 		let matches: Array<string> = this.sentenceLao.match(reg) || [];
 		matches.forEach(syllable => {
+			console.log('matched syllable', syllable)
 			let match = this.toKaraoke(syllable, phoneme);
-			// add separation to sentence only for phonems not leading by a sep
-			let regWithSep = new RegExp(`(${this.sep})?([${graphemes.vLeft}])?${syllable}${regs.boundary}`, 'gimu');
-			this.sentenceLao = this.sentenceLao.replace(regWithSep, this.sep + syllable);
+			// add separation to sentence' only for phonems not leading by a sep
+			let regWithSep = new RegExp(`${syllable}${regs.boundary}`, 'gimu');
+			let syllableTagged = this.subSep + syllable.replace(/(.)/ig, '$1' + this.subSep);
+			this.sentenceLao = this.sentenceLao.replace(regWithSep, this.sep + syllableTagged);
 			this.sentences.forEach((sentence, i) => {
 				this.sentences[i] = sentence.replace(regWithSep, this.sep + match[i]);
 			})
@@ -74,8 +78,9 @@ export class LaoneticsTranslater {
 		const location = phoneme.name;
 		let vowel: string;
 		let consonant: string;
+		let consonantLeftPart: string;
 		let extra: IConsonant;
-		let isHX = false;
+		let isDoubleConsonant = false;
 		let finalMatches: Array<string> = [];
 
 		// remove useless last boundary group for overlapping phonemes then copy final syllable is ready
@@ -83,9 +88,11 @@ export class LaoneticsTranslater {
 		// console.log('before treatment syllables', syllable);
 
 		// temporary remove ຫ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ
-		if (syllable.match(regs.leadingH)) {
-			isHX = true;
-			syllable = syllable.replace('ຫ', '');
+		if (syllable.match(new RegExp(regs.doubleConsonants))) {
+			consonantLeftPart = syllable.match(/[ຫຂຄ]/)[0][0]
+			isDoubleConsonant = true;
+			syllable = syllable.replace(/[ຫຂຄ]/, '');
+			console.log('consonantLeftPart', consonantLeftPart)
 		}
 		switch (location) {
 			case 'onlyFollow3':
@@ -110,7 +117,6 @@ export class LaoneticsTranslater {
 				consonant = syllable[1];
 				extra = syllable[4] ? consonants[syllable[4]] : '';
 				break;
-			case 'specialLeftFollow' :
 			case 'trailingLeftFollow':
 			case 'onlyLeftFollow':
 				vowel = syllable[0] + 'x' + syllable[2];
@@ -136,20 +142,21 @@ export class LaoneticsTranslater {
 		}
 
 		// replug temporary inhibited ຫ if needed
-		if (isHX) {
-			consonant = 'ຫ' + consonant;
+		if (isDoubleConsonant) {
+			consonant = consonantLeftPart + consonant;
 		}
 		this.langs.forEach((lang, i) => {
 			let trailingPart = (extra && extra.trailing && extra.trailing[lang]) || '';
 			let finalConsonant = consonants[consonant] && consonants[consonant].leading[lang];
 			let finalVowel = vowels[vowel] && vowels[vowel][lang];
-			// console.log(finalSyllable, 'c:', consonant, 'v:', vowel, 'ex:', trailingPart);
+			// console.log('c:', consonant, 'v:', vowel, 'ex:', trailingPart);
 			if (typeof finalConsonant === 'undefined' || typeof !finalVowel === 'undefined') {
 				console.log(location, 'c:', consonant, 'v:', vowel, 'e:', extra);
 				console.error('ERROR: impossible to understand', syllable, 'c:', finalConsonant, 'v:', finalVowel, 'e:', trailingPart);
 			}
 			finalMatches.push(finalConsonant + finalVowel + trailingPart)
 		});
+		console.log(finalMatches)
 		return finalMatches;
 	}
 };

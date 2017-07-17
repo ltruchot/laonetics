@@ -1,5 +1,5 @@
-import { LaoneticsTranslater } from 'laonetics';
-import { IConsonant, ISlicedSyllables, IPhonetics } from 'laonetics';
+import { LaoneticsTranslater } from './../../../src/laonetics';
+import { IConsonant, ISlicedSyllables, IPhonetics } from './../../../src/laonetics';
 
 (() => {
 	const translater = new LaoneticsTranslater();

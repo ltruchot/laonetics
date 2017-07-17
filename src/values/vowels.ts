@@ -1,4 +1,6 @@
 const vowels: any = {
+	// FIXME: manage abbreviation for 3 alone consonants (warning xວx, xອx)
+	// FIXME: difference between ​ແຫງ (hèng) ​ແຫງງ (ngèng)
 	// only left 1 follow 2
 	ເxຶອ: { en: 'uea', fr: 'üa', ph: 'ɯə'},
 	ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},
@@ -26,6 +28,10 @@ const vowels: any = {
 	// left + follow
 	ເxີ: { en: 'oe:', fr: 'eu:', ph: 'ɤː'},
 	ເxິ: { en: 'oe', fr: 'eu', ph: 'ɤ'},
+	ເxຍ: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
+	ແxະ: { en: 'ae', fr: 'è', ph: 'ɛ'},
+	ເxະ: { en: 'e', fr: 'é', ph: 'e'},
+	ໂxະ: { en: 'o', fr: 'ô', ph: 'o'},
 
 	// only follow 3
 	xົວະ: { en: 'ooa', fr: 'oua', ph: 'uə'},
@@ -39,11 +45,8 @@ const vowels: any = {
 
 	// left
 	ແx: { en: 'ae:', fr: 'è:', ph: 'ɛː'},
-	ແxະ: { en: 'ae', fr: 'è', ph: 'ɛ'},
 	ເx: { en: 'e:', fr: 'é:', ph: 'e'},
-	ເxະ: { en: 'e', fr: 'é', ph: 'e'},
 	ໂx: { en: 'o:', fr: 'ô:', ph: 'o'},
-	ໂxະ: { en: 'o', fr: 'ô', ph: 'o'},
 	ໄx: { en: 'ai', fr: 'ay', ph: 'aj'},
 	ໃx: { en: 'ai', fr: 'ay', ph: 'aj'},
 

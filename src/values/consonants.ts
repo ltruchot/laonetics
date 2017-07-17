@@ -35,6 +35,8 @@ const consonants: any = {
 	ຫມ: { leading: { en: 'm', fr: 'm', ph: 'm' } },
 	ຫຼ: { leading: { en: 'l', fr: 'l', ph: 'l' } },
 	ຫລ: { leading: { en: 'l', fr: 'l', ph: 'l' } },
-	ຫວ: { leading: { en: 'v', fr: 'v', ph: 'ʋ' } }
+	ຫວ: { leading: { en: 'v', fr: 'v', ph: 'ʋ' } },
+	ຂວ: { leading: { en: 'khw', fr: 'khou', ph: 'kʰw' } },
+	ຄວ: { leading: { en: 'khw', fr: 'khou', ph: 'kʰw' } }
 };
 export { consonants };

@@ -12,8 +12,7 @@
   "types": "./dist/laonetics.d.ts",
   "scripts": {
     "update": "rm -rf node_modules && npm cache verify && npm i",
-    "release": "rm -rf dist && webpack -p",
-    "watch": "webpack --watch"
+    "release": "rm -rf dist && webpack -p"
   },
   "keywords": [],
   "devDependencies": {
@@ -21,6 +20,7 @@
     "tslint": "^5.4.3",
     "typescript": "^2.4.1",
     "typings": "^2.1.1",
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
   }
 }
