@@ -4,29 +4,32 @@ import { IPhonemeReg } from './../interfaces/interfaces';
 // exported graphemes
 const graphemes: any = {
 	accents: '່້໌໊໋',
-	phantoms: '\\u200B\\u2022\\s\.\,\(\)', // word boundaries, visible or notinvisible in editors
+	phantoms: '\\u200B\\u2022\\s\.\,', // word boundaries, visible or notinvisible in editors
 	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
 	cTrailing: 'ງກມນຍວດບ',
-	cຫ: 'ງຍນມລວຼ',
-	cຂ: 'ວ',
-	cຄ: 'ວ',
+	cຫ: 'ຫ[ງຍນມລວຼ]',
+	cຂ: 'ຂວ',
+	cຄ: 'ຄວ',
 	vFollow: 'ໍິີຶືຸູາ',
 	vLeft: 'ແເໂໄໃ',
 	vSpecial: 'ອຽ',
 	vFollowComplement: 'ະ\\u0EB3', // 2nd one is a special form of lao grapheme "am", invisible in editors
 };
-const regCombinations: any = {
-	cSpecial: `(ຫ[${graphemes.cຫ}]|ຂ[${graphemes.cຂ}]|ຄ[${graphemes.cຄ}])`
+const preRegs: any = {
+	cSpecial: `(cຫ|cຂ|cຄ)`
 }
 
 // exported regs
 const regs: any = {
-	removables: `[${graphemes.accents}${graphemes.phantoms}]`,
-	doubleConsonants: `${regCombinations.cSpecial}`,
 	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}])`,
-	leadingAll: `(${regCombinations.cSpecial}|[${graphemes.cLeading}])`,
+	leadingAll: `(${preRegs.cSpecial}|[${graphemes.cLeading}])`,
 	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
 }
+
+const regInstances: any = {
+	removables: new RegExp(`[${graphemes.accents}${graphemes.phantoms}]`, 'gimu'),
+	cSpecial: new RegExp(`${preRegs.cSpecial}`)
+};
 
 // exported phonemes
 const phonemes: Array<IPhonemeReg> = [
@@ -54,7 +57,7 @@ const phonemes: Array<IPhonemeReg> = [
 		name: 'onlyLeftFollow2',
 		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ|ົາ|າະ)`
 	}, {
-		name: 'onlyLeftFollow',
+		name: 'specialLeftFollow',
 		reg: `ເ${regs.leadingAll}ຍ` // needed befor trailingLeftFollow, because "ຍ" match a consonant too
 	}, {
 		name: 'trailingLeftFollow',
@@ -84,4 +87,4 @@ const phonemes: Array<IPhonemeReg> = [
 ];
 
 // export shared objects
-export { phonemes, graphemes, regs };
+export { phonemes, graphemes, regs, regInstances };

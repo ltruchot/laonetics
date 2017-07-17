@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es2015",
     "allowJs": false,
     "declaration": true,
     "lib": [
@@ -14,17 +16,13 @@
     "removeComments": true,
     "sourceMap": true
   },
-  "files": [
-    "./src/laonetics.ts",
-    "./src/classes/LaoneticsTranslater.ts",
-    "./src/values/consonants.ts",
-    "./src/values/phonemes.ts",
-    "./src/values/consonants.ts",
-    "./src/interfaces/interfaces.ts"
+  "include": [
+    "./src"
   ],
   "exclude": [
-    "node_modules",
-    "dist",
-    "demo"
+    "./node_modules",
+    "./dist",
+    "./demo",
+    "./test"
   ]
 }

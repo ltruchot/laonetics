@@ -1,6 +1,6 @@
 import { vowels } from './../values/vowels';
 import { consonants } from './../values/consonants';
-import { regs, phonemes } from './../values/phonemes';
+import { regs, phonemes, regInstances } from './../values/phonemes';
 import { IConsonant, ISlicedSyllables, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
@@ -17,8 +17,8 @@ export class LaoneticsTranslater {
 		this.sentences = [];
 
 		// remove accents/'phantom unicodes' in sentence and copy value
-		this.sentenceLao = this.sentenceLao.replace(new RegExp(regs.removables, 'gimu'), '');
-		this.sentenceLao = this.sentenceLao.replace(/(\w+)/g, this.sep + '$1')
+		this.sentenceLao = this.sentenceLao.replace(regInstances.removables, '');
+		this.sentenceLao = this.sentenceLao.replace(/([\wàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\(\)]+)/g, this.sep + '$1')
 		this.sentenceLao = this.sentenceLao.replace(/ໆ/g, this.sep + 'ໆ');
 
 		// copy a base sentence for every lang
@@ -49,6 +49,9 @@ export class LaoneticsTranslater {
 			this.roms.push(romPhonemes)
 		});
 
+		// FIXME: post treatment needed
+		// exceptionList: `([${graphemes.vLeft}]ຫ[${graphemes.cຫ}]`,
+
 		// return fully sliced & replaced sentences, as 2 arrays
 		return {
 			lao: phonemesLao,
@@ -61,7 +64,6 @@ export class LaoneticsTranslater {
 		let reg = new RegExp(phoneme.reg + regs.boundary, 'gimu');
 		let matches: Array<string> = this.sentenceLao.match(reg) || [];
 		matches.forEach(syllable => {
-			console.log('matched syllable', syllable)
 			let match = this.toKaraoke(syllable, phoneme);
 			// add separation to sentence' only for phonems not leading by a sep
 			let regWithSep = new RegExp(`${syllable}${regs.boundary}`, 'gimu');
@@ -83,16 +85,12 @@ export class LaoneticsTranslater {
 		let isDoubleConsonant = false;
 		let finalMatches: Array<string> = [];
 
-		// remove useless last boundary group for overlapping phonemes then copy final syllable is ready
-		// syllable = syllable.substr(0, syllable.length - 1);
-		// console.log('before treatment syllables', syllable);
-
 		// temporary remove ຫ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ
-		if (syllable.match(new RegExp(regs.doubleConsonants))) {
+		// FIXME: what about ຂວາ ? <= 3 graphemes...
+		if (syllable.length > 3 && syllable.match(regInstances.cSpecial)) {
 			consonantLeftPart = syllable.match(/[ຫຂຄ]/)[0][0]
 			isDoubleConsonant = true;
 			syllable = syllable.replace(/[ຫຂຄ]/, '');
-			console.log('consonantLeftPart', consonantLeftPart)
 		}
 		switch (location) {
 			case 'onlyFollow3':
@@ -117,6 +115,7 @@ export class LaoneticsTranslater {
 				consonant = syllable[1];
 				extra = syllable[4] ? consonants[syllable[4]] : '';
 				break;
+			case 'specialLeftFollow':
 			case 'trailingLeftFollow':
 			case 'onlyLeftFollow':
 				vowel = syllable[0] + 'x' + syllable[2];
@@ -149,14 +148,13 @@ export class LaoneticsTranslater {
 			let trailingPart = (extra && extra.trailing && extra.trailing[lang]) || '';
 			let finalConsonant = consonants[consonant] && consonants[consonant].leading[lang];
 			let finalVowel = vowels[vowel] && vowels[vowel][lang];
-			// console.log('c:', consonant, 'v:', vowel, 'ex:', trailingPart);
+			// console.log('c:', consonant, 'v:', vowel, 'e:', !!extra);
 			if (typeof finalConsonant === 'undefined' || typeof !finalVowel === 'undefined') {
 				console.log(location, 'c:', consonant, 'v:', vowel, 'e:', extra);
 				console.error('ERROR: impossible to understand', syllable, 'c:', finalConsonant, 'v:', finalVowel, 'e:', trailingPart);
 			}
 			finalMatches.push(finalConsonant + finalVowel + trailingPart)
 		});
-		console.log(finalMatches)
 		return finalMatches;
 	}
 };

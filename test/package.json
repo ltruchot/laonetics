@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "pretest": "tsc",
+    "test": "nyc mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/mocha": "^2.2.41",
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
+    "mocha-typescript": "^1.1.7",
+    "nyc": "^11.0.3",
+    "source-map-support": "^0.4.15",
+    "typescript": "^2.4.1"
+  }
+}
