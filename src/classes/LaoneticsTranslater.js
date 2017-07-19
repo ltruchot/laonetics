@@ -27,12 +27,15 @@ class LaoneticsTranslater {
         phonemes_1.phonemes.forEach((item) => {
             this.replacePart(item);
         });
-        // remove first separation & manage ໆ and preprare final chopped phonemes
+        // separate last isolated lao grapheme, remove first separation & manage ໆ and preprare final chopped phonemes
+        this.sentenceLao = this.sentenceLao.replace(phonemes_1.regInstances.cAlone, this.sep + '$1');
         this.sentenceLao = this.sentenceLao.replace(new RegExp(this.subSep, 'g'), '');
         this.sentenceLao = this.sentenceLao.replace(this.sep, '');
         const phonemesLao = this.sentenceLao.split(this.sep);
         this.sentences.forEach((currentSentence, i) => {
-            this.sentences[i] = currentSentence.replace(this.sep, '');
+            // separate last isolated lao grapheme
+            this.sentences[i] = this.sentences[i].replace(phonemes_1.regInstances.cAlone, this.sep + '$1');
+            this.sentences[i] = this.sentences[i].replace(this.sep, '');
             // exceptions
             this.sentences[i] = this.sentences[i].replace(/y{2}/g, 'y'); // ຢຽມ double y case
             const romPhonemes = this.sentences[i].split(this.sep);
@@ -44,6 +47,8 @@ class LaoneticsTranslater {
             this.roms.push(romPhonemes);
         });
         // FIXME: post treatment needed
+        // what about "ທຣ" in ກົດ​ອິນທຣິຍສົ້ມ ?
+        // what about "ອົາ" in ນຳ​ອົາໝາກ​ສົມ​ພໍດີ
         // exceptionList: `([${graphemes.vLeft}]ຫ[${graphemes.cຫ}]`,
         // return fully sliced & replaced sentences, as 2 arrays
         return {

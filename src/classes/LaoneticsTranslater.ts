@@ -18,7 +18,7 @@ export class LaoneticsTranslater {
 
 		// remove accents/'phantom unicodes' in sentence and copy value
 		this.sentenceLao = this.sentenceLao.replace(regInstances.removables, '');
-		this.sentenceLao = this.sentenceLao.replace(/([\wàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\(\)]+)/g, this.sep + '$1')
+		this.sentenceLao = this.sentenceLao.replace(/([\wàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\(\)]+)/g, this.sep + '$1');
 		this.sentenceLao = this.sentenceLao.replace(/ໆ/g, this.sep + 'ໆ');
 
 		// copy a base sentence for every lang
@@ -31,13 +31,16 @@ export class LaoneticsTranslater {
 			this.replacePart(item);
 		})
 
-		// remove first separation & manage ໆ and preprare final chopped phonemes
+		// separate last isolated lao grapheme, remove first separation & manage ໆ and preprare final chopped phonemes
+		this.sentenceLao = this.sentenceLao.replace(regInstances.cAlone, this.sep + '$1')
 		this.sentenceLao = this.sentenceLao.replace(new RegExp(this.subSep, 'g'), '');
 		this.sentenceLao = this.sentenceLao.replace(this.sep, '');
-
 		const phonemesLao = this.sentenceLao.split(this.sep);
+
 		this.sentences.forEach((currentSentence, i) => {
-			this.sentences[i] = currentSentence.replace(this.sep, '');
+			// separate last isolated lao grapheme
+			this.sentences[i] = this.sentences[i].replace(regInstances.cAlone, this.sep + '$1')
+			this.sentences[i] = this.sentences[i].replace(this.sep, '');
 			// exceptions
 			this.sentences[i] = this.sentences[i].replace(/y{2}/g, 'y'); // ຢຽມ double y case
 			const romPhonemes = this.sentences[i].split(this.sep);
@@ -50,6 +53,8 @@ export class LaoneticsTranslater {
 		});
 
 		// FIXME: post treatment needed
+		// what about "ທຣ" in ກົດ​ອິນທຣິຍສົ້ມ ?
+		// what about "ອົາ" in ນຳ​ອົາໝາກ​ສົມ​ພໍດີ
 		// exceptionList: `([${graphemes.vLeft}]ຫ[${graphemes.cຫ}]`,
 
 		// return fully sliced & replaced sentences, as 2 arrays

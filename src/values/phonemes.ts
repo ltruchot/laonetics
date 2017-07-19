@@ -3,8 +3,8 @@ import { IPhonemeReg } from './../interfaces/interfaces';
 
 // exported graphemes
 const graphemes: any = {
-	accents: '່້໌໊໋',
-	phantoms: '\\u200B\\u2022\\s\.\,\-', // word boundaries, visible or notinvisible in editors
+	accents: '່້໊໋໌',
+	phantoms: '\\u200B\\u2022\\s\.\,\-', // word boundaries and punctuation, visible or not in editors
 	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
 	cTrailing: 'ງກມນຍວດບ',
 	cຫ: 'ຫ[ງຍນມລວຼ]',
@@ -13,7 +13,7 @@ const graphemes: any = {
 	vFollow: 'ໍິີຶືຸູາ',
 	vLeft: 'ແເໂ',
 	vLeftSpecial: 'ໄໃ',
-	vSpecial: 'ອຽ',
+	vLikeConsonants: 'ອວ',
 	vFollowComplement: 'ະ\\u0EB3', // 2nd one is a special form of lao grapheme "am", invisible in editors
 };
 const preRegs: any = {
@@ -22,14 +22,15 @@ const preRegs: any = {
 
 // exported regs
 const regs: any = {
-	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}${graphemes.vSpecial}ັົວ])`,
+	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}ຽັົ])`,
 	leadingAll: `(${preRegs.cSpecial}|[${graphemes.cLeading}])`,
 	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
 }
 
 const regInstances: any = {
 	removables: new RegExp(`[${graphemes.accents}${graphemes.phantoms}]`, 'gimu'),
-	cSpecial: new RegExp(`${preRegs.cSpecial}`)
+	cSpecial: new RegExp(`${preRegs.cSpecial}`),
+	cAlone: new RegExp(`([${graphemes.cLeading}]{2,})`, 'g')
 };
 
 // exported phonemes
@@ -41,7 +42,7 @@ const phonemes: Array<IPhonemeReg> = [
 	},
 	{
 		location: 'trailingFollow2',
-		reg: `${regs.leadingAll}ັ[${graphemes.vSpecial}ອ][${graphemes.cTrailing}]`,
+		reg: `${regs.leadingAll}ັ[ຽອ][${graphemes.cTrailing}]`,
 		charNbr: 4
 	},
 	{
@@ -85,7 +86,7 @@ const phonemes: Array<IPhonemeReg> = [
 		charNbr: 2
 	},	{
 		location: 'trailingFollow1',
-		reg: `${regs.leadingAll}[${graphemes.vSpecial}ັົວ][${graphemes.cTrailing}]`,
+		reg: `${regs.leadingAll}[ຽອັົວ][${graphemes.cTrailing}]`,
 		charNbr: 3
 	}, {
 		location: 'trailingFollow',
@@ -95,11 +96,8 @@ const phonemes: Array<IPhonemeReg> = [
 		location: 'onlyFollow',
 		reg: `${regs.leadingAll}${regs.follow1Only}`,
 		charNbr: 2
-	}/* , {
-		name: 'alone',
-		reg: `${regs.leadingAll}`
-	}*/
+	}
 ];
 
 // export shared objects
-export { phonemes, graphemes, regs, regInstances };
+export { phonemes, regs, regInstances };

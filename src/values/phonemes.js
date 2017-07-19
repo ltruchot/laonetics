@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // exported graphemes
 const graphemes = {
-    accents: '່້໌໊໋',
+    accents: '່້໊໋໌',
     phantoms: '\\u200B\\u2022\\s\.\,\-',
     cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
     cTrailing: 'ງກມນຍວດບ',
@@ -12,23 +12,23 @@ const graphemes = {
     vFollow: 'ໍິີຶືຸູາ',
     vLeft: 'ແເໂ',
     vLeftSpecial: 'ໄໃ',
-    vSpecial: 'ອຽ',
+    vLikeConsonants: 'ອວ',
     vFollowComplement: 'ະ\\u0EB3',
 };
-exports.graphemes = graphemes;
 const preRegs = {
     cSpecial: `(${graphemes.cຫ}|${graphemes.cຂ}|${graphemes.cຄ})`
 };
 // exported regs
 const regs = {
-    boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}${graphemes.vSpecial}ັົວ])`,
+    boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}ຽັົ])`,
     leadingAll: `(${preRegs.cSpecial}|[${graphemes.cLeading}])`,
     follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
 };
 exports.regs = regs;
 const regInstances = {
     removables: new RegExp(`[${graphemes.accents}${graphemes.phantoms}]`, 'gimu'),
-    cSpecial: new RegExp(`${preRegs.cSpecial}`)
+    cSpecial: new RegExp(`${preRegs.cSpecial}`),
+    cAlone: new RegExp(`([${graphemes.cLeading}]{2,})`, 'g')
 };
 exports.regInstances = regInstances;
 // exported phonemes
@@ -40,7 +40,7 @@ const phonemes = [
     },
     {
         location: 'trailingFollow2',
-        reg: `${regs.leadingAll}ັ[${graphemes.vSpecial}ອ][${graphemes.cTrailing}]`,
+        reg: `${regs.leadingAll}ັ[ຽອ][${graphemes.cTrailing}]`,
         charNbr: 4
     },
     {
@@ -84,7 +84,7 @@ const phonemes = [
         charNbr: 2
     }, {
         location: 'trailingFollow1',
-        reg: `${regs.leadingAll}[${graphemes.vSpecial}ັົວ][${graphemes.cTrailing}]`,
+        reg: `${regs.leadingAll}[ຽອັົວ][${graphemes.cTrailing}]`,
         charNbr: 3
     }, {
         location: 'trailingFollow',
@@ -94,10 +94,7 @@ const phonemes = [
         location: 'onlyFollow',
         reg: `${regs.leadingAll}${regs.follow1Only}`,
         charNbr: 2
-    } /* , {
-        name: 'alone',
-        reg: `${regs.leadingAll}`
-    }*/
+    }
 ];
 exports.phonemes = phonemes;
 //# sourceMappingURL=phonemes.js.map
