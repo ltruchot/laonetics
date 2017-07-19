@@ -13,7 +13,7 @@ export interface ISlicedSyllables {
 	roms: Array<Array<string>>;
 };
 export interface IPhonemeReg {
-	name: string;
+	location: string;
 	reg: string;
-	overlapping?: boolean;
+	charNbr: number;
 }

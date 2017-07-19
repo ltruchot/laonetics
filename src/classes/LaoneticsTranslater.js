@@ -54,11 +54,12 @@ class LaoneticsTranslater {
     replacePart(phoneme) {
         // console.log('LaoneticsTranslater::replacePart', phoneme);
         let reg = new RegExp(phoneme.reg + phonemes_1.regs.boundary, 'gimu');
+        // console.log(reg);
         let matches = this.sentenceLao.match(reg) || [];
         matches.forEach(syllable => {
             let match = this.toKaraoke(syllable, phoneme);
             // add separation to sentence' only for phonems not leading by a sep
-            let regWithSep = new RegExp(`${syllable}${phonemes_1.regs.boundary}`, 'gimu');
+            let regWithSep = new RegExp(`${syllable}${phonemes_1.regs.boundary}`);
             let syllableTagged = this.subSep + syllable.replace(/(.)/ig, '$1' + this.subSep);
             this.sentenceLao = this.sentenceLao.replace(regWithSep, this.sep + syllableTagged);
             this.sentences.forEach((sentence, i) => {
@@ -68,16 +69,17 @@ class LaoneticsTranslater {
     }
     toKaraoke(syllable, phoneme) {
         // console.log('LaoneticsTranslater::toKaraoke', syllable, phoneme)
-        const location = phoneme.name;
+        const location = phoneme.location;
+        const minCharNumber = phoneme.charNbr;
         let vowel;
         let consonant;
         let consonantLeftPart;
         let extra;
         let isDoubleConsonant = false;
         let finalMatches = [];
-        // temporary remove ຫ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ
-        // FIXME: what about ຂວາ ? <= 3 graphemes...
-        if (syllable.length > 3 && syllable.match(phonemes_1.regInstances.cSpecial)) {
+        // temporary remove ຫ, ຂ, ຄ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ, ຂວ, ຄວ
+        if (syllable.length > minCharNumber && syllable.match(phonemes_1.regInstances.cSpecial)) {
+            // console.log('combined consonants found:', syllable)
             consonantLeftPart = syllable.match(/[ຫຂຄ]/)[0][0];
             isDoubleConsonant = true;
             syllable = syllable.replace(/[ຫຂຄ]/, '');

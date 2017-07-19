@@ -5,7 +5,9 @@
   "main": "test.js",
   "scripts": {
     "pretest": "tsc",
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "watch": "mocha-typescript-watch",
+    "prepare": "tsc"
   },
   "author": "",
   "license": "ISC",

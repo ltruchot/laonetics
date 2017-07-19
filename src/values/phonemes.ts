@@ -4,24 +4,25 @@ import { IPhonemeReg } from './../interfaces/interfaces';
 // exported graphemes
 const graphemes: any = {
 	accents: '່້໌໊໋',
-	phantoms: '\\u200B\\u2022\\s\.\,', // word boundaries, visible or notinvisible in editors
+	phantoms: '\\u200B\\u2022\\s\.\,\-', // word boundaries, visible or notinvisible in editors
 	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
 	cTrailing: 'ງກມນຍວດບ',
 	cຫ: 'ຫ[ງຍນມລວຼ]',
 	cຂ: 'ຂວ',
 	cຄ: 'ຄວ',
 	vFollow: 'ໍິີຶືຸູາ',
-	vLeft: 'ແເໂໄໃ',
+	vLeft: 'ແເໂ',
+	vLeftSpecial: 'ໄໃ',
 	vSpecial: 'ອຽ',
 	vFollowComplement: 'ະ\\u0EB3', // 2nd one is a special form of lao grapheme "am", invisible in editors
 };
 const preRegs: any = {
-	cSpecial: `(cຫ|cຂ|cຄ)`
+	cSpecial: `(${graphemes.cຫ}|${graphemes.cຂ}|${graphemes.cຄ})`
 }
 
 // exported regs
 const regs: any = {
-	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}])`,
+	boundary: `(?![${graphemes.vFollow}${graphemes.vFollowComplement}${graphemes.vSpecial}ັົວ])`,
 	leadingAll: `(${preRegs.cSpecial}|[${graphemes.cLeading}])`,
 	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`
 }
@@ -34,52 +35,66 @@ const regInstances: any = {
 // exported phonemes
 const phonemes: Array<IPhonemeReg> = [
 	{
-		name: 'onlyFollow3',
-		reg: `${regs.leadingAll}ົວະ`
+		location: 'onlyFollow3',
+		reg: `${regs.leadingAll}ົວະ`,
+		charNbr: 4
 	},
 	{
-		name: 'trailingFollow2',
-		reg: `${regs.leadingAll}ັ[${graphemes.vSpecial}ອ][${graphemes.cTrailing}]`
+		location: 'trailingFollow2',
+		reg: `${regs.leadingAll}ັ[${graphemes.vSpecial}ອ][${graphemes.cTrailing}]`,
+		charNbr: 4
 	},
 	{
-		name: 'onlyFollow2',
-		reg: `${regs.leadingAll}(ໍາ|ັວ|ົວ)`
+		location: 'onlyFollow2',
+		reg: `${regs.leadingAll}(ໍາ|ັວ|ົວ)`,
+		charNbr: 3
 	},
 	{
-		name: 'specialLeftFollow2',
-		reg: `ເ${regs.leadingAll}ັຍ`
+		location: 'specialLeftFollow2',
+		reg: `ເ${regs.leadingAll}ັຍ`,
+		charNbr: 4
 	},
 	{
-		name: 'trailingLeftFollow2',
-		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ)[${graphemes.cTrailing}]`
+		location: 'trailingLeftFollow2',
+		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ)[${graphemes.cTrailing}]`,
+		charNbr: 4
 	},
 	{
-		name: 'onlyLeftFollow2',
-		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ|ົາ|າະ)`
+		location: 'onlyLeftFollow2',
+		reg: `ເ${regs.leadingAll}([ຶ|ື]ອ|ົາ|າະ)`,
+		charNbr: 4
 	}, {
-		name: 'specialLeftFollow',
-		reg: `ເ${regs.leadingAll}ຍ` // needed befor trailingLeftFollow, because "ຍ" match a consonant too
+		location: 'specialLeftFollow', // needed befor trailingLeftFollow, because "ຍ" match a consonant too
+		reg: `ເ${regs.leadingAll}ຍ`,
+		charNbr: 3
 	}, {
-		name: 'trailingLeftFollow',
-		reg: `(ເ${regs.leadingAll}[ິີັ]|ແ${regs.leadingAll}ັ)[${graphemes.cTrailing}]`
+		location: 'trailingLeftFollow',
+		reg: `(ເ${regs.leadingAll}[ິີັ]|ແ${regs.leadingAll}ັ)[${graphemes.cTrailing}]`,
+		charNbr: 4
 	}, {
-		name: 'onlyLeftFollow',
-		reg: `(ເ${regs.leadingAll}[ິີະ]|ແ${regs.leadingAll}ະ)`
+		location: 'onlyLeftFollow',
+		reg: `(ເ${regs.leadingAll}[ິີະ]|ແ${regs.leadingAll}ະ)`,
+		charNbr: 3
 	}, {
-		name: 'trailingLeft',
-		reg: `[${graphemes.vLeft}]${regs.leadingAll}[${graphemes.cTrailing}]`
+		location: 'trailingLeft',
+		reg: `[${graphemes.vLeft}]${regs.leadingAll}[${graphemes.cTrailing}]`,
+		charNbr: 3
 	}, {
-		name: 'onlyLeft',
-		reg: `[${graphemes.vLeft}]${regs.leadingAll}`
+		location: 'onlyLeft',
+		reg: `[${graphemes.vLeft}${graphemes.vLeftSpecial}]${regs.leadingAll}`,
+		charNbr: 2
 	},	{
-		name: 'trailingFollow1',
-		reg: `${regs.leadingAll}[${graphemes.vSpecial}ັົວ][${graphemes.cTrailing}]`
+		location: 'trailingFollow1',
+		reg: `${regs.leadingAll}[${graphemes.vSpecial}ັົວ][${graphemes.cTrailing}]`,
+		charNbr: 3
 	}, {
-		name: 'trailingFollow',
-		reg: `${regs.leadingAll}${regs.follow1Only}[${graphemes.cTrailing}]`
+		location: 'trailingFollow',
+		reg: `${regs.leadingAll}${regs.follow1Only}[${graphemes.cTrailing}]`,
+		charNbr: 3
 	}, {
-		name: 'onlyFollow',
-		reg: `${regs.leadingAll}${regs.follow1Only}`
+		location: 'onlyFollow',
+		reg: `${regs.leadingAll}${regs.follow1Only}`,
+		charNbr: 2
 	}/* , {
 		name: 'alone',
 		reg: `${regs.leadingAll}`
