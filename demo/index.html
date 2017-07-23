@@ -1,41 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable." />
-    <title>Laonetics: a smart Lao romanization and karaoke</title>
-    <link rel="stylesheet" type="text/css" href="/assets/style/style.css">
+	<meta charset="utf-8">
+	<meta name="description" content="Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable." />
+	<title>Laonetics: a smart Lao romanization and karaoke</title>
+
+	<!-- bootstrap 4 + dependencies JQuery & Tether -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="/assets/style/style.css">
+
 </head>
 
 <body>
-		<div class="container">
-			<h1>Laonetics: a smart Lao romanization and karaoke</h1>
-			<h3>
-				Playground - Beta version 0.3.0 -
-				<a href="https://github.com/n-a-n/laonetics">@see git repo</a>
-			</h3>
-			<h3>by ໂລໂລ (Loïc TRUCHOT) - license CC-BY-NC-4.0</h3>
-			<h3>Laonetics is born as a part of <a href="http://laolol.com">Laolol, an app to learn lao/french/english while playing.</a></h3>
-			<div>
-				<textarea class="font-lao" id="in">
+	<div class="container">
+		<h1>Laonetics: a smart Lao romanization and karaoke</h1>
+		<h3>
+			Playground - Beta version 0.3.0 -
+			<a href="https://github.com/n-a-n/laonetics">@see git repo</a>
+		</h3>
+		<h3>by ໂລໂລ (Loïc TRUCHOT) - license CC-BY-NC-4.0</h3>
+		<h3>Laonetics is born as a part of <a href="http://laolol.com">Laolol, an app to learn lao/french/english while playing.</a></h3>
+		<div>
+			<textarea class="font-lao" id="in">
 1 ແອັບເປິນ  ເປັນໝາກໄມ້ທີ່ດີທີ່ສຸດ ສຳລັບການລ້າງສານຜິດອອກຈາກຮ່າງກາຍ ສານເພຕິນໃນແອບເປີ້ນ ຈະຊ່ວຍກຳຈັດສານພິດ ແລະ ປ້ອງກັນບໍ່ໃຫ້ໂປຕິນ ໃນສຳໄສ້ບູດເນົ່າ ນອກຈາກນີ້ ແອບເປີນ ຍັງມີໄຟເບີຣສູງ ສາມາດຊ່ວຍທຳຄວາມສະອາດສຳໃສ້, ຕັບ ແລະ ລະບົບຍ່ອຍອາຫານດີຂຶ້ນ.
 2 ໜາກນັດ ຊ່ວຍຮັກສາອາການອັກເສບໃນທາງເດີນອາຫານ ແລະ ຊ່ວຍໃນການເຮັດວຽກຂອງຕ່ອມໄຮທຣ່.
 3 ໝາກລະເຊັງ ເປັນໝາກໄມ້ໜ່ວຍນ້ອຍ ທີ່ເຮັດໜ້າທີ່ເປັນສານຟອກລ້າງໃຫ້ຜິວໜັງ, ຕັບ, ປອດ ແລະ ລຳໄສ້ ສະອາດ ນອກຈາກນີ້ໝາກລະແຊັງ ຍັງອຸດົມໄປດ້ວຍເກືອແຮ່ ແລະ ພະລັງງານຈຶ່ງຊ່ວຍ ບຳລຸງເລືອດ ຊ່ວຍຊ້ອມແຊມແຊນໃນຮ່າງກາຍ.
 4 ໝາກໂມ ມີລິດຂັບປັດສະວະ ຊ່ວຍຟອກລ້າງຮ່າງກາຍ ແລະ ຍັງຊ່ວຍຮັກສາບາດແຜໃນກະເພາະ, ຫລຸດຄວາມດັນເລືອດ.
 5 ໝາກຫຸ່ງ ມີເອນໄຊປາເປນໃນກ້າມເນື້ອ ໝາກຫຸ່ງມີລັກສະນະຄ້າຍກັບ ນ້ຳຍ່ອຍກະເພາະອາຫານ ດັ່ງນັ້ນ ໝາກຫຸ່ງຈຶ່ງຊ່ວຍໃຫ້ ໂປຮຕິນແຕກຕົວໄດ້ໄວຂຶ້ນ ອີກທັງຍັງຊ່ວຍ ທຳຄວາມສະອາດສຳໄສ້ ແລະ ຊ່ວຍຍ່ອຍອາຫານ ການຮັບປະທານໝາກຫຸ່ງ ເປັນປະຈຳຍັງຊ່ວຍ ຫລຸດອາການຊືມເສົ້າໄດ້ເປັນຍ່າງດີ.</textarea>
-			</div>
-			<div><button id="btn-translate">Romanize</button></div>
-			<div>
-				<strong>Lao:</strong> <span class="font-lao" id="out-lo"></span>
-				<hr />
-				<strong>French:</strong> <span id="out-fr"></span>
-				<hr />
-				<strong>English:</strong> <span id="out-en"></span>
-				<hr />
-				<strong>IPA (Phonetics):</strong> <span id="out-ph"></span>
+		</div>
+		<div>
+			<button class="btn btn-primary" id="btn-romanize">Romanize</button>
+			<button class="btn btn-primary" id="btn-reset">Reset</button>
+			<div class="btn-group" role="group">
+				<button class="btn btn-primary" id="btn-generate">Generate all</button>
+				<div class="btn-group" role="group">
+			    <button id="btn-ddl-consonants" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ກ
+			    </button>
+			    <div id="ddl-consonants" class="font-lao dropdown-menu" aria-labelledby="btn-ddl-consonants">
+			    </div>
+			  </div>
 			</div>
 		</div>
-    <script src="/assets/script/bundle.js"></script>
+		<div>
+		To:
+			<div class="form-check form-check-inline">
+				<label class="form-check-label">
+					<input class="form-check-input" id="cb-lo" type="checkbox" value="" checked> lao
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<label class="form-check-label">
+					<input class="form-check-input" id="cb-fr" type="checkbox" value="" checked> french
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<label class="form-check-label">
+					<input class="form-check-input" id="cb-en" type="checkbox" value="" checked> english
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<label class="form-check-label">
+					<input class="form-check-input" id="cb-ph" type="checkbox" value="" checked> IPA (phonetics)
+				</label>
+			</div>
+		</div>
+		<div id="block-lo">
+			<strong>Lao:</strong> <span class="font-lao" id="out-lo"></span>
+			<hr />
+		</div>
+		<div id="block-fr">
+			<strong>French:</strong> <span id="out-fr"></span>
+			<hr />
+		</div>
+		<div id="block-en">
+			<strong>English:</strong> <span id="out-en"></span>
+			<hr />
+		</div>
+		<div id="block-ph">
+			<strong>IPA (Phonetics):</strong> <span id="out-ph"></span>
+		</div>
+	</div>
+	<script src="/assets/script/bundle.js"></script>
 </body>
 
 </html>

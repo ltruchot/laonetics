@@ -1,6 +1,6 @@
 import { vowels } from './../values/vowels';
 import { consonants } from './../values/consonants';
-import { regs, phonemes, regInstances } from './../values/phonemes';
+import { graphemes, regs, phonemes, regInstances } from './../values/phonemes';
 import { IConsonant, ISlicedSyllables, IPhonemeReg } from './../interfaces/interfaces';
 
 export class LaoneticsTranslater {
@@ -52,10 +52,9 @@ export class LaoneticsTranslater {
 			this.roms.push(romPhonemes)
 		});
 
-		// FIXME: post treatment needed
+		// FIXME: post treatment needed ?
 		// what about "ທຣ" in ກົດ​ອິນທຣິຍສົ້ມ ?
 		// what about "ອົາ" in ນຳ​ອົາໝາກ​ສົມ​ພໍດີ
-		// exceptionList: `([${graphemes.vLeft}]ຫ[${graphemes.cຫ}]`,
 
 		// return fully sliced & replaced sentences, as 2 arrays
 		return {
@@ -64,12 +63,14 @@ export class LaoneticsTranslater {
 		};
 	}
 
+	getMatches (reg: string): Array<string> {
+		let searchReg = new RegExp(reg + regs.boundary, 'gimu');
+		return this.sentenceLao.match(searchReg) || [];
+	}
+
 	replacePart (phoneme: IPhonemeReg): void {
 		// console.log('LaoneticsTranslater::replacePart', phoneme);
-		let reg = new RegExp(phoneme.reg + regs.boundary, 'gimu');
-		// console.log(reg);
-		let matches: Array<string> = this.sentenceLao.match(reg) || [];
-		matches.forEach(syllable => {
+		this.getMatches(phoneme.reg).forEach(syllable => {
 			let match = this.toKaraoke(syllable, phoneme);
 			// add separation to sentence' only for phonems not leading by a sep
 			let regWithSep = new RegExp(`${syllable}${regs.boundary}`);
@@ -106,7 +107,7 @@ export class LaoneticsTranslater {
 				break
 			case 'trailingFollow2':
 			case 'onlyFollow2':
-				vowel = 'x' + syllable[1] + syllable[2];
+				vowel = 'x' + syllable[1] + syllable[2] + (syllable[3] ? 'x' : '');
 				consonant = syllable[0];
 				extra = syllable[3] ? consonants[syllable[3]] : '';
 				break;
@@ -118,26 +119,26 @@ export class LaoneticsTranslater {
 			case 'specialLeftFollow2':
 			case 'trailingLeftFollow2':
 			case 'onlyLeftFollow2':
-				vowel = syllable[0] + 'x' + syllable[2] +  syllable[3];
+				vowel = syllable[0] + 'x' + syllable[2] +  syllable[3] + (syllable[4] ? 'x' : '');
 				consonant = syllable[1];
 				extra = syllable[4] ? consonants[syllable[4]] : '';
 				break;
 			case 'specialLeftFollow':
 			case 'trailingLeftFollow':
 			case 'onlyLeftFollow':
-				vowel = syllable[0] + 'x' + syllable[2];
+				vowel = syllable[0] + 'x' + syllable[2] + (syllable[3] ? 'x' : '');
 				consonant = syllable[1];
 				extra = syllable[3] ? consonants[syllable[3]] : '';
 				break;
 			case 'trailingLeft':
 			case 'onlyLeft':
-				vowel =  syllable[0] + 'x';
+				vowel =  syllable[0] + 'x' + (syllable[2] ? 'x' : '');
 				consonant = syllable[1]
 				extra = syllable[2] ? consonants[syllable[2]] : '';
 				break;
 			case 'trailingFollow':
 			case 'onlyFollow':
-				vowel = 'x' + syllable[1];
+				vowel = 'x' + syllable[1] + (syllable[2] ? 'x' : '');
 				consonant = syllable[0]
 				extra = syllable[2] ? consonants[syllable[2]] : '';
 				break;
@@ -163,5 +164,37 @@ export class LaoneticsTranslater {
 			finalMatches.push(finalConsonant + finalVowel + trailingPart)
 		});
 		return finalMatches;
+	}
+
+	/*
+		Generate every possibles phonemes for the given consonant
+	 */
+	getPhonemesByConsonant (consonant: string) {
+		let phonemes: Array<string> = [];
+		let simplePhonemes: Array<string> = [];
+		let trailingConsonantPhonemes: Array<string> = [];
+
+		// get every vowels
+		for (let vowel in vowels) {
+			if (vowels.hasOwnProperty(vowel)) {
+				if (vowel.match(/x/g).length > 1) {
+					// store vowels with trailing consonant (like xອx)
+					trailingConsonantPhonemes.push(vowel);
+				} else {
+					// store simple vowels (like ແx or xຳ)
+					simplePhonemes.push(vowel);
+				}
+			}
+		}
+		simplePhonemes.forEach(item => {
+			phonemes.push(item.replace(/x/, consonant))
+		});
+		trailingConsonantPhonemes.forEach(item => {
+			let phoneme = item.replace(/x/, consonant);
+			for (let i = 0; i < graphemes.cTrailing.length; i++) {
+				phonemes.push(phoneme.replace(/x/, graphemes.cTrailing[i]))
+			}
+		});
+		return phonemes;
 	}
 };

@@ -1,65 +1,86 @@
 const vowels: any = {
-	// FIXME: manage abbreviation for 3 alone consonants (warning xວx, xອx)
-	// FIXME: difference between ​ແຫງ (hèng) ​ແຫງງ (ngèng)
-	// only left 1 follow 2
-	ເxຶອ: { en: 'uea', fr: 'üa', ph: 'ɯə'},
-	ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},
-	ເxົາ: { en: 'ao', fr: 'ao', ph: 'aw'},
-	ເxາະ: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
-	ເxັຍ: { en: 'ia', fr: 'yâ', ph: 'iə'},
-
-	// trailing follow 2
-	xັອx: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
-	xັຽx: { en: 'ia', fr: 'yâ', ph: 'iə'},
-	xັວx: { en: 'ooa', fr: 'oua', ph: 'uə'},
-
-	// only left+x+x
-	ແxັ: { en: 'ae', fr: 'è', ph: 'ɛ'},
-	ເxັ: { en: 'e', fr: 'é', ph: 'e'},
-
-
-	// trailing follow 1
-	xຽx: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
-	xອx: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔ:'},
-	xວx: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
+	// a
+	xາ: { en: 'a:', fr: 'â:', ph: 'aː'},
+	xາx: { en: 'a:', fr: 'â:', ph: 'aː'},
+	xະ: { en: 'a', fr: 'â', ph: 'a'},
 	xັx: { en: 'a', fr: 'â', ph: 'a'},
+
+	// ɛ
+	ແx: { en: 'ae:', fr: 'è:', ph: 'ɛː'},
+	ແxx: { en: 'ae:', fr: 'è:', ph: 'ɛː'},
+	ແxະ: { en: 'ae', fr: 'è', ph: 'ɛ'},
+	ແxັx: { en: 'ae', fr: 'è', ph: 'ɛ'},
+
+	// e
+	ເx: { en: 'e:', fr: 'é:', ph: 'eː'},
+	ເxx: { en: 'e:', fr: 'é:', ph: 'eː'},
+	ເxະ: { en: 'e', fr: 'é', ph: 'e'},
+	ເxັx: { en: 'e', fr: 'é', ph: 'e'},
+
+	// o
+	ໂx: { en: 'o:', fr: 'ô:', ph: 'oː'},
+	ໂxx: { en: 'o:', fr: 'ô:', ph: 'oː'},
+	ໂxະ: { en: 'o', fr: 'ô', ph: 'o'},
 	xົx: { en: 'o', fr: 'ô', ph: 'o'},
 
-	// left + follow
-	ເxີ: { en: 'oe:', fr: 'eu:', ph: 'ɤː'},
-	ເxິ: { en: 'oe', fr: 'eu', ph: 'ɤ'},
-	ເxຍ: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
-	ແxະ: { en: 'ae', fr: 'è', ph: 'ɛ'},
-	ເxະ: { en: 'e', fr: 'é', ph: 'e'},
-	ໂxະ: { en: 'o', fr: 'ô', ph: 'o'},
+	// ɔ
+	xໍ: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔː'},
+	xອx: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔː'},
+	ເxາະ: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
+	xັອx: { en: 'ɔ', fr: 'ɔ', ph: 'ɔ'},
 
-	// only follow 3
-	xົວະ: { en: 'ooa', fr: 'oua', ph: 'uə'},
+	// i
+	xີ: { en: 'ee:', fr: 'i:', ph: 'iː'},
+	xີx: { en: 'ee:', fr: 'i:', ph: 'iː'},
+	xິ: { en: 'ee', fr: 'i', ph: 'i'},
+	xິx: { en: 'ee', fr: 'i', ph: 'i'},
 
-	// only follow 2
-	xົວ: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
-	xໍາ: { en: 'am', fr: 'âm', ph: 'am'},
+	// ɯ
+	xື: { en: 'ue:', fr: 'ü:', ph: 'ɯː'},
+	xືx: { en: 'ue:', fr: 'ü:', ph: 'ɯː'},
+	xຶ: { en: 'ue', fr: 'ü', ph: 'ɯ'},
+	xຶx: { en: 'ue', fr: 'ü', ph: 'ɯ'},
 
-	// only "am"
-	xຳ: { en: 'am', fr: 'âm', ph: 'am'}, // here is the combined form of "am", not visible on every text editor
+	// u
+	xູ: { en: 'oo:', fr: 'ou:', ph: 'uː'},
+	xູx: { en: 'oo:', fr: 'ou:', ph: 'uː'},
+	xຸ: { en: 'oo', fr: 'ou', ph: 'u'},
+	xຸx: { en: 'oo', fr: 'ou', ph: 'u'},
 
-	// left
-	ແx: { en: 'ae:', fr: 'è:', ph: 'ɛː'},
-	ເx: { en: 'e:', fr: 'é:', ph: 'e'},
-	ໂx: { en: 'o:', fr: 'ô:', ph: 'o'},
+	// aj
 	ໄx: { en: 'ai', fr: 'ay', ph: 'aj'},
 	ໃx: { en: 'ai', fr: 'ay', ph: 'aj'},
 
-	// follow
-	xໍ: { en: 'ɔ:', fr: 'ɔ:', ph: 'ɔː'},
-	xິ: { en: 'ee', fr: 'i', ph: 'i'},
-	xີ: { en: 'ee:', fr: 'i:', ph: 'i:'},
-	xຶ: { en: 'ue', fr: 'ü', ph: 'ɯ'},
-	xື: { en: 'ue:', fr: 'ü:', ph: 'ɯː'},
-	xຸ: { en: 'oo', fr: 'ou', ph: 'u'},
-	xູ: { en: 'oo:', fr: 'ou:', ph: 'uː'},
-	xາ: { en: 'a:', fr: 'â:', ph: 'aː'},
-	xະ: { en: 'a', fr: 'â', ph: 'a'},
+	// am
+	xຳ: { en: 'am', fr: 'âm', ph: 'am'}, // here is the combined form of "am", not visible on every text editor
+	xໍາ: { en: 'am', fr: 'âm', ph: 'am'},
+
+	// aw
+	ເxົາ: { en: 'ao', fr: 'ao', ph: 'aw'},
+
+	// ɤ
+	ເxີ: { en: 'oe:', fr: 'eu:', ph: 'ɤː'},
+	ເxີx: { en: 'oe:', fr: 'eu:', ph: 'ɤː'},
+	ເxິ: { en: 'oe', fr: 'eu', ph: 'ɤ'},
+	ເxິx: { en: 'oe', fr: 'eu', ph: 'ɤ'},
+
+	// iə
+	ເxຍ: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
+	xຽx: { en: 'i:a', fr: 'y:â', ph: 'iːə'},
+	ເxັຍ: { en: 'ia', fr: 'yâ', ph: 'iə'},
+	xັຽx: { en: 'ia', fr: 'yâ', ph: 'iə'},
+
+	// uə
+	xົວ: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
+	xວx: { en: 'oo:a', fr: 'ou:a', ph: 'uːə'},
+	xົວະ: { en: 'ooa', fr: 'oua', ph: 'uə'},
+	xັວx: { en: 'ooa', fr: 'oua', ph: 'uə'},
+
+	// ɯə
+	ເxືອx: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},
+	ເxືອ: { en: 'ue:a', fr: 'ü:a', ph: 'ɯːə'},
+	ເxຶອ: { en: 'uea', fr: 'üa', ph: 'ɯə'},
+	ເxຶອx: { en: 'uea', fr: 'üa', ph: 'ɯə'},
 
 	// alone
 	x: { en: '', fr: '', ph: ''}

@@ -1,29 +1,93 @@
-import { LaoneticsTranslater } from './../../../src/laonetics';
-import { IConsonant, ISlicedSyllables, IPhonetics } from './../../../src/laonetics';
+import {
+	LaoneticsTranslater,
+	consonants,
+	IConsonant,
+	ISlicedSyllables,
+	IPhonetics
+} from './../../../src/laonetics';
 
-(() => {
+$(document).ready(() => {
+	const allConsonants = Object.keys(consonants);
+	const ddlConsonants = $('#ddl-consonants');
+	const btnDdlConsonants = $('#btn-ddl-consonants');
+	allConsonants.forEach(item => {
+		ddlConsonants.append(`<a class="dropdown-item" href="#">${item}</a>`);
+	});
+	ddlConsonants.on('click', 'a', event => {
+		btnDdlConsonants.text($(event.target).text());
+	});
+
 	const translater = new LaoneticsTranslater();
 
-	const htmlIn = <HTMLTextAreaElement>document.getElementById('in');
-	const htmlOutLo = <HTMLSpanElement>document.getElementById('out-lo');
-	const htmlOutFr = <HTMLSpanElement>document.getElementById('out-fr');
-	const htmlOutEn = <HTMLSpanElement>document.getElementById('out-en');
-	const htmlOutPh = <HTMLSpanElement>document.getElementById('out-ph');
+	const htmlIn: JQuery = $('#in');
+	const htmlOutLo: JQuery = $('#out-lo');
+	const htmlOutFr: JQuery = $('#out-fr');
+	const htmlOutEn: JQuery = $('#out-en');
+	const htmlOutPh: JQuery = $('#out-ph');
 
-	function translate () {
-		const msgLaoding = 'Loading...';
-		htmlOutFr.innerText = msgLaoding;
-		htmlOutEn.innerText = msgLaoding;
-		htmlOutLo.innerText = msgLaoding;
-		let laoSentence = htmlIn.value;
+	romanize();
+
+	const btnRomanize: JQuery = $('#btn-romanize');
+	const btnReset: JQuery = $('#btn-reset');
+	const btnGenerate: JQuery = $('#btn-generate');
+	const cbLo: JQuery = $('#cb-lo');
+	const cbFr: JQuery = $('#cb-fr');
+	const cbEn: JQuery = $('#cb-en');
+	const cbPh: JQuery = $('#cb-ph');
+	const blockLo: JQuery = $('#block-lo');
+	const blockFr: JQuery = $('#block-fr');
+	const blockEn: JQuery = $('#block-en');
+	const blockPh: JQuery = $('#block-ph');
+
+	btnRomanize.on('click', romanize);
+	btnReset.on('click', reset);
+	btnGenerate.on('click', generate);
+
+	cbLo.on('click', event => {
+		blockLo.toggle();
+	})
+	cbFr.on('click', event => {
+		blockFr.toggle();
+	})
+	cbEn.on('click', event => {
+		blockEn.toggle();
+	})
+	cbPh.on('click', event => {
+		blockPh.toggle();
+	})
+
+	function romanize () {
+		displayLoading();
+		let laoSentence = htmlIn.val();
 		let slicedSyllables: ISlicedSyllables = translater.getKaraoke(laoSentence, ['fr', 'en', 'ph']);
-		htmlOutLo.innerText = slicedSyllables.lao.join(' - ');
-		htmlOutFr.innerText = slicedSyllables.roms[0].join(' - ');
-		htmlOutEn.innerText = slicedSyllables.roms[1].join(' - ');
-		htmlOutPh.innerText = '/' + slicedSyllables.roms[2].join('/ - /') + '/';
+		htmlOutLo.html(slicedSyllables.lao.join(' - '));
+		htmlOutFr.html(slicedSyllables.roms[0].join(' - '));
+		htmlOutEn.html(slicedSyllables.roms[1].join(' - '));
+		htmlOutPh.html(slicedSyllables.roms[2].join(' - '));
 	}
 
-	translate();
-	const btnTranslate = <HTMLButtonElement>document.getElementById('btn-translate');
-	btnTranslate.addEventListener('click', translate, false);
-})();
+	function reset () {
+		htmlIn.val('');
+		htmlOutFr.html('');
+		htmlOutEn.html('');
+		htmlOutLo.html('');
+		htmlOutPh.html('');
+	}
+
+	function generate () {
+		reset();
+		displayLoading();
+		const phonemes = translater.getPhonemesByConsonant(btnDdlConsonants.text());
+		htmlIn.val(phonemes.join(''));
+		romanize();
+	}
+
+	function displayLoading () {
+		const msgLaoding = 'Loading...';
+		htmlOutFr.html(msgLaoding);
+		htmlOutEn.html(msgLaoding);
+		htmlOutLo.html(msgLaoding);
+		htmlOutPh.html(msgLaoding);
+	}
+});
+

@@ -5,10 +5,31 @@ import { vowels } from './../src/laonetics';
 import { consonants } from './../src/laonetics';
 import { regs, phonemes, regInstances } from './../src/laonetics';
 import { IConsonant, ISlicedSyllables, IPhonemeReg } from './../src/laonetics';
-@suite('Check lao phoneme slice process')
+import { simplePhonemes } from './valid/simples'
+@suite('Class LaoneticsTranslater:')
 class Try {
+	private allກ: Array<string>;
+	private allກAsStr: string;
 	private translater = new LaoneticsTranslater();
-	constructor () {}
+	constructor () {
+		this.allກ = this.translater.getPhonemesByConsonant('ກ');
+		this.allກAsStr = this.allກ.join('')
+	}
+	@test'check method getPhonemesByConsonant - Generate every possibles phonemes for the given consonant'() {
+		assert.isArray(this.allກ, 'Method should return an Array');
+		assert.isString(this.allກ[0], 'It should be an Array of strings');
+		assert.lengthOf(this.allກAsStr, 743, 'Every strings joined should have a length of 743')
+	}
+	@test'check every simple consonants like ກ'() {
+		const langs = ['ph'];
+		let slicedSyllables: ISlicedSyllables = this.translater.getKaraoke(this.allກAsStr, langs);
+		const lao = slicedSyllables.lao;
+		const ph = slicedSyllables.roms[0];
+		simplePhonemes.forEach((item, i) => {
+			assert.equal(item.lo, lao[i], `Lao phoneme n°${i + 1} in "${this.allກAsStr}"`);
+			assert.equal(item.ph, ph[i], `Phonetic phoneme n°${i + 1} in "${this.allກAsStr}"`);
+		});
+	}
 	@test'Check every ຫ ຄ'() {
 		const laoSentence = 'ແຫງແຫງງງາມຄວາມໃຫຍເຫຼືອກັນເຫລືອກເຫຍ';
 		const langs = ['ph'];
@@ -30,7 +51,7 @@ class Try {
 			lo: 'ເຫລືອກ', ph: 'lɯːək'
 		}, {
 			lo: 'ເຫຍ', ph: 'hiːə'
-		}, ]
+		}];
 		let slicedSyllables: ISlicedSyllables = this.translater.getKaraoke(laoSentence, langs);
 		const lao = slicedSyllables.lao;
 		const ph = slicedSyllables.roms[0];

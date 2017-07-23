@@ -12,9 +12,9 @@ const graphemes = {
     vFollow: 'ໍິີຶືຸູາ',
     vLeft: 'ແເໂ',
     vLeftSpecial: 'ໄໃ',
-    vLikeConsonants: 'ອວ',
     vFollowComplement: 'ະ\\u0EB3',
 };
+exports.graphemes = graphemes;
 const preRegs = {
     cSpecial: `(${graphemes.cຫ}|${graphemes.cຂ}|${graphemes.cຄ})`
 };
@@ -40,12 +40,12 @@ const phonemes = [
     },
     {
         location: 'trailingFollow2',
-        reg: `${regs.leadingAll}ັ[ຽອ][${graphemes.cTrailing}]`,
+        reg: `${regs.leadingAll}ັ[ຽອວ][${graphemes.cTrailing}]`,
         charNbr: 4
     },
     {
         location: 'onlyFollow2',
-        reg: `${regs.leadingAll}(ໍາ|ັວ|ົວ)`,
+        reg: `${regs.leadingAll}(ໍາ|ົວ)`,
         charNbr: 3
     },
     {
@@ -72,7 +72,7 @@ const phonemes = [
         charNbr: 4
     }, {
         location: 'onlyLeftFollow',
-        reg: `(ເ${regs.leadingAll}[ິີະ]|ແ${regs.leadingAll}ະ)`,
+        reg: `(ເ${regs.leadingAll}[ິີ]|[${graphemes.vLeft}]${regs.leadingAll}ະ)`,
         charNbr: 3
     }, {
         location: 'trailingLeft',

@@ -25,7 +25,7 @@ textarea {
 	padding:10px;
 	display: block;
 	width:100%;
-	min-height:220px;
+	min-height:250px;
 	font-size: 1.2rem;
 }
 button {
@@ -38,4 +38,5 @@ button {
 }
 .font-lao {
 	font-family: Phetsarath_OT !important;
+	font-size: 1.3rem;
 }
