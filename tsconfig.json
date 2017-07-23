@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "experimentalDecorators": true,
-    "target": "es2015",
+    "target": "es5",
     "allowJs": false,
     "declaration": true,
     "lib": [

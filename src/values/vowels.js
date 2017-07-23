@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const vowels = {
+var vowels = {
     // a
     xາ: { en: 'a:', fr: 'â:', ph: 'aː' },
     xາx: { en: 'a:', fr: 'â:', ph: 'aː' },

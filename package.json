@@ -1,6 +1,6 @@
 {
   "name": "laonetics",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "CC-BY-NC-4.0",
   "author": "Loïc TRUCHOT <loic.truchot.pro@gmail.com> (http://laonetics.io)",
   "description": "Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable.",
@@ -12,9 +12,18 @@
   "types": "./dist/laonetics.d.ts",
   "scripts": {
     "update": "rm -rf node_modules && npm cache verify && npm i",
-    "release": "rm -rf dist && webpack -p"
+    "release": "rm -rf dist && webpack -p && npm publish"
   },
-  "keywords": ["lao", "language", "french", "english", "ipa", "phonetics", "romanization", "karaoke"],
+  "keywords": [
+    "lao",
+    "language",
+    "french",
+    "english",
+    "ipa",
+    "phonetics",
+    "romanization",
+    "karaoke"
+  ],
   "devDependencies": {
     "ts-loader": "^2.2.1",
     "tslint": "^5.4.3",

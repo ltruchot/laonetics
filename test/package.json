@@ -1,13 +1,14 @@
 {
-  "name": "test",
-  "version": "1.0.0",
+  "name": "laonetics-test",
+  "version": "0.3.1",
   "description": "",
   "main": "test.js",
   "scripts": {
     "pretest": "tsc",
     "test": "nyc mocha",
     "watch": "mocha-typescript-watch",
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "update": "rm -rf node_modules && npm cache verify && npm i"
   },
   "author": "",
   "license": "ISC",
