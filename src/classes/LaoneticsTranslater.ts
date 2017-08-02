@@ -93,6 +93,13 @@ export class LaoneticsTranslater {
 		let isDoubleConsonant = false;
 		let finalMatches: Array<string> = [];
 
+		// temporary remove accents
+
+		if (syllable.length > minCharNumber && syllable.match(regInstances.accents)) {
+			syllable = syllable.replace(regInstances.accents, '');
+		}
+
+
 		// temporary remove ຫ, ຂ, ຄ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ, ຂວ, ຄວ
 		if (syllable.length > minCharNumber && syllable.match(regInstances.cSpecial)) {
 			// console.log('combined consonants found:', syllable)

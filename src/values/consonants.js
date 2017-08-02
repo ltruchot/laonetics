@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ
-const consonants = {
+var consonants = {
     ກ: { leading: { en: 'k', fr: 'k', ph: 'k' }, trailing: { en: 'k', fr: 'k', ph: 'k' } },
     ຄ: { leading: { en: 'kh', fr: 'kh', ph: 'kʰ' } },
     ຂ: { leading: { en: 'kh', fr: 'kh', ph: 'kʰ' } },

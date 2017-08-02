@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const vowels_1 = require("./../values/vowels");
-const consonants_1 = require("./../values/consonants");
-const phonemes_1 = require("./../values/phonemes");
-class LaoneticsTranslater {
-    constructor() {
+var vowels_1 = require("./../values/vowels");
+var consonants_1 = require("./../values/consonants");
+var phonemes_1 = require("./../values/phonemes");
+var LaoneticsTranslater = (function () {
+    function LaoneticsTranslater() {
         this.sep = '-#@#-'; // an arbitrary separation string, to cut the string phoneme by phoneme
         this.subSep = '-##@##-';
         this.roms = [];
         this.sentences = [];
     }
-    getKaraoke(sentence, langs) {
+    LaoneticsTranslater.prototype.getKaraoke = function (sentence, langs) {
+        var _this = this;
         this.sentenceLao = sentence;
         this.langs = langs;
         this.roms = [];
@@ -20,31 +21,31 @@ class LaoneticsTranslater {
         this.sentenceLao = this.sentenceLao.replace(/([\wàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\(\)]+)/g, this.sep + '$1');
         this.sentenceLao = this.sentenceLao.replace(/ໆ/g, this.sep + 'ໆ');
         // copy a base sentence for every lang
-        this.langs.forEach(lang => {
-            this.sentences.push(this.sentenceLao);
+        this.langs.forEach(function (lang) {
+            _this.sentences.push(_this.sentenceLao);
         });
         // complexity ordered replacement, phoneme by phoneme
-        phonemes_1.phonemes.forEach((item) => {
-            this.replacePart(item);
+        phonemes_1.phonemes.forEach(function (item) {
+            _this.replacePart(item);
         });
         // separate last isolated lao grapheme, remove first separation & manage ໆ and preprare final chopped phonemes
         this.sentenceLao = this.sentenceLao.replace(phonemes_1.regInstances.cAlone, this.sep + '$1');
         this.sentenceLao = this.sentenceLao.replace(new RegExp(this.subSep, 'g'), '');
         this.sentenceLao = this.sentenceLao.replace(this.sep, '');
-        const phonemesLao = this.sentenceLao.split(this.sep);
-        this.sentences.forEach((currentSentence, i) => {
+        var phonemesLao = this.sentenceLao.split(this.sep);
+        this.sentences.forEach(function (currentSentence, i) {
             // separate last isolated lao grapheme
-            this.sentences[i] = this.sentences[i].replace(phonemes_1.regInstances.cAlone, this.sep + '$1');
-            this.sentences[i] = this.sentences[i].replace(this.sep, '');
+            _this.sentences[i] = _this.sentences[i].replace(phonemes_1.regInstances.cAlone, _this.sep + '$1');
+            _this.sentences[i] = _this.sentences[i].replace(_this.sep, '');
             // exceptions
-            this.sentences[i] = this.sentences[i].replace(/y{2}/g, 'y'); // ຢຽມ double y case
-            const romPhonemes = this.sentences[i].split(this.sep);
-            romPhonemes.forEach((phoneme, index) => {
+            _this.sentences[i] = _this.sentences[i].replace(/y{2}/g, 'y'); // ຢຽມ double y case
+            var romPhonemes = _this.sentences[i].split(_this.sep);
+            romPhonemes.forEach(function (phoneme, index) {
                 if (phoneme === 'ໆ') {
                     romPhonemes[index] = romPhonemes[index - 1];
                 }
             });
-            this.roms.push(romPhonemes);
+            _this.roms.push(romPhonemes);
         });
         // FIXME: post treatment needed ?
         // what about "ທຣ" in ກົດ​ອິນທຣິຍສົ້ມ ?
@@ -54,34 +55,35 @@ class LaoneticsTranslater {
             lao: phonemesLao,
             roms: this.roms
         };
-    }
-    getMatches(reg) {
-        let searchReg = new RegExp(reg + phonemes_1.regs.boundary, 'gimu');
+    };
+    LaoneticsTranslater.prototype.getMatches = function (reg) {
+        var searchReg = new RegExp(reg + phonemes_1.regs.boundary, 'gimu');
         return this.sentenceLao.match(searchReg) || [];
-    }
-    replacePart(phoneme) {
+    };
+    LaoneticsTranslater.prototype.replacePart = function (phoneme) {
+        var _this = this;
         // console.log('LaoneticsTranslater::replacePart', phoneme);
-        this.getMatches(phoneme.reg).forEach(syllable => {
-            let match = this.toKaraoke(syllable, phoneme);
+        this.getMatches(phoneme.reg).forEach(function (syllable) {
+            var match = _this.toKaraoke(syllable, phoneme);
             // add separation to sentence' only for phonems not leading by a sep
-            let regWithSep = new RegExp(`${syllable}${phonemes_1.regs.boundary}`);
-            let syllableTagged = this.subSep + syllable.replace(/(.)/ig, '$1' + this.subSep);
-            this.sentenceLao = this.sentenceLao.replace(regWithSep, this.sep + syllableTagged);
-            this.sentences.forEach((sentence, i) => {
-                this.sentences[i] = sentence.replace(regWithSep, this.sep + match[i]);
+            var regWithSep = new RegExp("" + syllable + phonemes_1.regs.boundary);
+            var syllableTagged = _this.subSep + syllable.replace(/(.)/ig, '$1' + _this.subSep);
+            _this.sentenceLao = _this.sentenceLao.replace(regWithSep, _this.sep + syllableTagged);
+            _this.sentences.forEach(function (sentence, i) {
+                _this.sentences[i] = sentence.replace(regWithSep, _this.sep + match[i]);
             });
         });
-    }
-    toKaraoke(syllable, phoneme) {
+    };
+    LaoneticsTranslater.prototype.toKaraoke = function (syllable, phoneme) {
         // console.log('LaoneticsTranslater::toKaraoke', syllable, phoneme)
-        const location = phoneme.location;
-        const minCharNumber = phoneme.charNbr;
-        let vowel;
-        let consonant;
-        let consonantLeftPart;
-        let extra;
-        let isDoubleConsonant = false;
-        let finalMatches = [];
+        var location = phoneme.location;
+        var minCharNumber = phoneme.charNbr;
+        var vowel;
+        var consonant;
+        var consonantLeftPart;
+        var extra;
+        var isDoubleConsonant = false;
+        var finalMatches = [];
         // temporary remove ຫ, ຂ, ຄ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ, ຂວ, ຄວ
         if (syllable.length > minCharNumber && syllable.match(phonemes_1.regInstances.cSpecial)) {
             // console.log('combined consonants found:', syllable)
@@ -136,10 +138,10 @@ class LaoneticsTranslater {
         if (isDoubleConsonant) {
             consonant = consonantLeftPart + consonant;
         }
-        this.langs.forEach((lang, i) => {
-            let trailingPart = (extra && extra.trailing && extra.trailing[lang]) || '';
-            let finalConsonant = consonants_1.consonants[consonant] && consonants_1.consonants[consonant].leading[lang];
-            let finalVowel = vowels_1.vowels[vowel] && vowels_1.vowels[vowel][lang];
+        this.langs.forEach(function (lang, i) {
+            var trailingPart = (extra && extra.trailing && extra.trailing[lang]) || '';
+            var finalConsonant = consonants_1.consonants[consonant] && consonants_1.consonants[consonant].leading[lang];
+            var finalVowel = vowels_1.vowels[vowel] && vowels_1.vowels[vowel][lang];
             // console.log('c:', consonant, 'v:', vowel, 'e:', !!extra);
             if (typeof finalConsonant === 'undefined' || typeof !finalVowel === 'undefined') {
                 console.log(location, 'c:', consonant, 'v:', vowel, 'e:', extra);
@@ -148,16 +150,16 @@ class LaoneticsTranslater {
             finalMatches.push(finalConsonant + finalVowel + trailingPart);
         });
         return finalMatches;
-    }
+    };
     /*
         Generate every possibles phonemes for the given consonant
      */
-    getPhonemesByConsonant(consonant) {
-        let phonemes = [];
-        let simplePhonemes = [];
-        let trailingConsonantPhonemes = [];
+    LaoneticsTranslater.prototype.getPhonemesByConsonant = function (consonant) {
+        var phonemes = [];
+        var simplePhonemes = [];
+        var trailingConsonantPhonemes = [];
         // get every vowels
-        for (let vowel in vowels_1.vowels) {
+        for (var vowel in vowels_1.vowels) {
             if (vowels_1.vowels.hasOwnProperty(vowel)) {
                 if (vowel.match(/x/g).length > 1) {
                     // store vowels with trailing consonant (like xອx)
@@ -169,18 +171,19 @@ class LaoneticsTranslater {
                 }
             }
         }
-        simplePhonemes.forEach(item => {
+        simplePhonemes.forEach(function (item) {
             phonemes.push(item.replace(/x/, consonant));
         });
-        trailingConsonantPhonemes.forEach(item => {
-            let phoneme = item.replace(/x/, consonant);
-            for (let i = 0; i < phonemes_1.graphemes.cTrailing.length; i++) {
+        trailingConsonantPhonemes.forEach(function (item) {
+            var phoneme = item.replace(/x/, consonant);
+            for (var i = 0; i < phonemes_1.graphemes.cTrailing.length; i++) {
                 phonemes.push(phoneme.replace(/x/, phonemes_1.graphemes.cTrailing[i]));
             }
         });
         return phonemes;
-    }
-}
+    };
+    return LaoneticsTranslater;
+}());
 exports.LaoneticsTranslater = LaoneticsTranslater;
 ;
 //# sourceMappingURL=LaoneticsTranslater.js.map

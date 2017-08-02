@@ -16,4 +16,5 @@ export interface IPhonemeReg {
 	location: string;
 	reg: string;
 	charNbr: number;
+	noAccent: string;
 }

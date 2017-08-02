@@ -12,9 +12,18 @@
   "types": "./dist/laonetics.d.ts",
   "scripts": {
     "update": "rm -rf node_modules && npm cache verify && npm i",
-    "release": "rm -rf dist && webpack -p"
+    "release": "rm -rf dist && webpack -p && npm publish"
   },
-  "keywords": ["lao", "language", "french", "english", "ipa", "phonetics", "romanization", "karaoke"],
+  "keywords": [
+    "lao",
+    "language",
+    "french",
+    "english",
+    "ipa",
+    "phonetics",
+    "romanization",
+    "karaoke"
+  ],
   "devDependencies": {
     "ts-loader": "^2.2.1",
     "tslint": "^5.4.3",

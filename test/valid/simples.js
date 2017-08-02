@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const simplePhonemes = [
+var simplePhonemes = [
     { lo: 'ກາ', ph: 'kaː' },
     { lo: 'ກະ', ph: 'ka' },
     { lo: 'ແກ', ph: 'kɛː' },
