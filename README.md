@@ -27,7 +27,7 @@ let slicedSyllables: ISlicedSyllables = translater.getKaraoke('ກະຕ່າ�
 */
 ```
 
-Current version: Beta v0.3.0 "Smart lao language karaoke".
+Current version: Beta v0.4.0 "Smart lao language karaoke".
 
 Demo running here: [laonetics.io](http://laonetics.io)
 
