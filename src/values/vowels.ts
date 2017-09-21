@@ -47,7 +47,7 @@ const vowels: any = {
 	xຸ: { en: 'oo', fr: 'ou', ph: 'u'},
 	xຸx: { en: 'oo', fr: 'ou', ph: 'u'},
 
-	// aj
+	// ay
 	ໄx: { en: 'ai', fr: 'ay', ph: 'ay'},
 	ໃx: { en: 'ai', fr: 'ay', ph: 'ay'},
 
