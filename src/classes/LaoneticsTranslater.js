@@ -10,6 +10,47 @@ var LaoneticsTranslater = (function () {
         this.roms = [];
         this.sentences = [];
     }
+    LaoneticsTranslater.prototype.sortCollectionByConsonant = function (items, filter) {
+        // console.log('LaoneticsTranslater::sortCollectionByConsonant', items);
+        var consonants = phonemes_1.graphemes.cLeading.split('');
+        var sorter = this.getSorterByAlphabet(consonants, filter);
+        return items.sort(sorter);
+    };
+    LaoneticsTranslater.prototype.sortArrayByConsonant = function (items) {
+        // console.log('LaoneticsTranslater::sortArrayByConsonant', items);
+        var consonants = phonemes_1.graphemes.cLeading.split('');
+        var sorter = this.getSorterByAlphabet(consonants);
+        return items.sort(sorter);
+    };
+    LaoneticsTranslater.prototype.getSorterByAlphabet = function (alphabet, filter) {
+        return function (a, b) {
+            var reg = new RegExp('[' + phonemes_1.graphemes.vLeft + phonemes_1.graphemes.vLeftSpecial + ']');
+            if (filter) {
+                var deepness = filter.split('.');
+                deepness.forEach(function (key) {
+                    a = a[key];
+                    b = b[key];
+                });
+            }
+            a = a.replace(reg, '');
+            b = b.replace(reg, '');
+            var index_a = alphabet.indexOf(a[0]);
+            var index_b = alphabet.indexOf(b[0]);
+            if (index_a === index_b) {
+                // same first character, sort regular
+                if (a < b) {
+                    return -1;
+                }
+                else if (a > b) {
+                    return 1;
+                }
+                return 0;
+            }
+            else {
+                return index_a - index_b;
+            }
+        };
+    };
     LaoneticsTranslater.prototype.getKaraoke = function (sentence, langs) {
         var _this = this;
         this.sentenceLao = sentence;
@@ -84,6 +125,10 @@ var LaoneticsTranslater = (function () {
         var extra;
         var isDoubleConsonant = false;
         var finalMatches = [];
+        // temporary remove accents
+        if (syllable.length > minCharNumber && syllable.match(phonemes_1.regInstances.accents)) {
+            syllable = syllable.replace(phonemes_1.regInstances.accents, '');
+        }
         // temporary remove ຫ, ຂ, ຄ for "combined consonants": ຫງ, ຫຍ, ຫນ, ຫມ, ຫຼ, ຫລ, ຫວ, ຂວ, ຄວ
         if (syllable.length > minCharNumber && syllable.match(phonemes_1.regInstances.cSpecial)) {
             // console.log('combined consonants found:', syllable)

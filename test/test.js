@@ -44,7 +44,7 @@ var Try = (function () {
             }, {
                 lo: 'ຄວາມ', ph: 'kʰwaːm'
             }, {
-                lo: 'ໃຫຍ', ph: 'ɲaj'
+                lo: 'ໃຫຍ', ph: 'ɲay'
             }, {
                 lo: 'ເຫຼືອ', ph: 'lɯːə'
             }, {
@@ -62,6 +62,24 @@ var Try = (function () {
             chai_1.assert.equal(item.ph, ph[i], "Phonetic phoneme n\u00B0" + (i + 1) + " in \"" + laoSentence + "\"");
         });
     };
+    Try.prototype['Check lao aphabetical orderers'] = function () {
+        var orderedConsonants = this.translater.sortArrayByConsonant(['ວ', 'ຂ', 'ກ', 'ຄ']);
+        chai_1.assert.deepEqual(orderedConsonants, ['ກ', 'ຄ', 'ຂ', 'ວ']);
+        var oreredWords = this.translater.sortArrayByConsonant(['ບໍ່', 'ສະບາຍດີ', 'ເຈົ້າ', 'ຂອບໃຈ']);
+        chai_1.assert.deepEqual(oreredWords, ['ຂອບໃຈ', 'ເຈົ້າ', 'ສະບາຍດີ', 'ບໍ່']);
+        var orderedItems = this.translater.sortCollectionByConsonant([
+            { lo: { wrd: 'ບໍ່' } },
+            { lo: { wrd: 'ສະບາຍດີ' } },
+            { lo: { wrd: 'ເຈົ້າ' } },
+            { lo: { wrd: 'ຂອບໃຈ' } }
+        ], 'lo.wrd');
+        chai_1.assert.deepEqual(orderedItems, [
+            { lo: { wrd: 'ຂອບໃຈ' } },
+            { lo: { wrd: 'ເຈົ້າ' } },
+            { lo: { wrd: 'ສະບາຍດີ' } },
+            { lo: { wrd: 'ບໍ່' } }
+        ]);
+    };
     __decorate([
         mocha_typescript_1.test
     ], Try.prototype, "check method getPhonemesByConsonant - Generate every possibles phonemes for the given consonant", null);
@@ -71,6 +89,9 @@ var Try = (function () {
     __decorate([
         mocha_typescript_1.test
     ], Try.prototype, "Check every \u0EAB \u0E84", null);
+    __decorate([
+        mocha_typescript_1.test
+    ], Try.prototype, "Check lao aphabetical orderers", null);
     Try = __decorate([
         mocha_typescript_1.suite('Class LaoneticsTranslater:')
     ], Try);

@@ -10,6 +10,18 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   box-sizing: border-box;
 }
+h1 {
+	font-size: 1.6rem;
+}
+h2 {
+	font-size: 1.4rem;
+}
+h3 {
+	font-size: 1.2rem;
+}
+p {
+	margin: 5px 0 0 0;
+}
 @font-face {
 	font-family: 'Phetsarath_OT';
 	src: url('/assets/fonts/phetsarath_ot.eot');
@@ -25,7 +37,7 @@ textarea {
 	padding:10px;
 	display: block;
 	width:100%;
-	min-height:250px;
+	min-height:200px;
 	font-size: 1.2rem;
 }
 button {

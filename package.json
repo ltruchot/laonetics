@@ -5,8 +5,8 @@
   "author": "Loïc TRUCHOT <loic.truchot.pro@gmail.com> (http://laonetics.io)",
   "description": "Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable.",
   "engines": {
-    "node": "~8.0.0",
-    "npm": "~5.0.0"
+    "node": "~8.4.0",
+    "npm": "~5.3.0"
   },
   "main": "./dist/laonetics.min.js",
   "types": "./dist/laonetics.d.ts",

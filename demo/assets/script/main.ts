@@ -60,10 +60,10 @@ $(document).ready(() => {
 		displayLoading();
 		let laoSentence = htmlIn.val();
 		let slicedSyllables: ISlicedSyllables = translater.getKaraoke(laoSentence, ['fr', 'en', 'ph']);
-		htmlOutLo.html(slicedSyllables.lao.join(' - '));
-		htmlOutFr.html(slicedSyllables.roms[0].join(' - '));
-		htmlOutEn.html(slicedSyllables.roms[1].join(' - '));
-		htmlOutPh.html(slicedSyllables.roms[2].join(' - '));
+		htmlOutLo.html(slicedSyllables.lao.join(' '));
+		htmlOutFr.html(slicedSyllables.roms[0].join(' '));
+		htmlOutEn.html(slicedSyllables.roms[1].join(' '));
+		htmlOutPh.html(slicedSyllables.roms[2].join(' '));
 	}
 
 	function reset () {
@@ -90,4 +90,3 @@ $(document).ready(() => {
 		htmlOutPh.html(msgLaoding);
 	}
 });
-

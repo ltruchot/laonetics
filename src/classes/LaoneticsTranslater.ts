@@ -10,6 +10,49 @@ export class LaoneticsTranslater {
 	private roms: Array<Array<string>> = [];
 	private sentences: Array<string> = [];
 	private langs: Array<string>;
+
+	sortCollectionByConsonant (items: Array<any>, filter: string) {
+		// console.log('LaoneticsTranslater::sortCollectionByConsonant', items);
+		const consonants = graphemes.cLeading.split('');
+		const sorter = this.getSorterByAlphabet(consonants, filter);
+		return items.sort(sorter);
+	}
+	sortArrayByConsonant(items: Array<string>) {
+		// console.log('LaoneticsTranslater::sortArrayByConsonant', items);
+		const consonants = graphemes.cLeading.split('');
+		const sorter = this.getSorterByAlphabet(consonants);
+		return items.sort(sorter)
+	}
+
+	getSorterByAlphabet (alphabet: Array<string>, filter?: string) {
+		return (a: any, b: any) => {
+			let reg = new RegExp('[' + graphemes.vLeft + graphemes.vLeftSpecial + ']');
+			if (filter) {
+				const deepness = filter.split('.')
+				deepness.forEach(key => {
+					a = a[key];
+					b = b[key];
+				});
+			}
+			a = a.replace(reg, '');
+			b = b.replace(reg, '');
+			let index_a = alphabet.indexOf(a[0]);
+			let index_b = alphabet.indexOf(b[0]);
+
+			if (index_a === index_b) {
+				// same first character, sort regular
+				if (a < b) {
+						return -1;
+				} else if (a > b) {
+						return 1;
+				}
+				return 0;
+			} else {
+				return index_a - index_b;
+			}
+		}
+	}
+
 	getKaraoke (sentence: string, langs: Array<string>): ISlicedSyllables {
 		this.sentenceLao = sentence;
 		this.langs = langs;

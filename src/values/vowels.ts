@@ -48,8 +48,8 @@ const vowels: any = {
 	xຸx: { en: 'oo', fr: 'ou', ph: 'u'},
 
 	// aj
-	ໄx: { en: 'ai', fr: 'ay', ph: 'aj'},
-	ໃx: { en: 'ai', fr: 'ay', ph: 'aj'},
+	ໄx: { en: 'ai', fr: 'ay', ph: 'ay'},
+	ໃx: { en: 'ai', fr: 'ay', ph: 'ay'},
 
 	// am
 	xຳ: { en: 'am', fr: 'âm', ph: 'am'}, // here is the combined form of "am", not visible on every text editor

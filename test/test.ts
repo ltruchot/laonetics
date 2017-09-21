@@ -42,7 +42,7 @@ class Try {
 		}, {
 			lo: 'ຄວາມ', ph: 'kʰwaːm'
 		}, {
-			lo: 'ໃຫຍ', ph: 'ɲaj'
+			lo: 'ໃຫຍ', ph: 'ɲay'
 		}, {
 			lo: 'ເຫຼືອ', ph: 'lɯːə'
 		}, {
@@ -60,9 +60,22 @@ class Try {
 			assert.equal(item.ph, ph[i], `Phonetic phoneme n°${i + 1} in "${laoSentence}"`);
 		});
 	}
+	@test'Check lao aphabetical orderers'() {
+		const orderedConsonants = this.translater.sortArrayByConsonant(['ວ', 'ຂ', 'ກ', 'ຄ']);
+		assert.deepEqual(orderedConsonants, ['ກ', 'ຄ', 'ຂ', 'ວ']);
+		const oreredWords = this.translater.sortArrayByConsonant(['ບໍ່', 'ສະບາຍດີ', 'ເຈົ້າ', 'ຂອບໃຈ']);
+		assert.deepEqual(oreredWords, ['ຂອບໃຈ', 'ເຈົ້າ', 'ສະບາຍດີ', 'ບໍ່']);
+		const orderedItems = this.translater.sortCollectionByConsonant([
+			{ lo: { wrd: 'ບໍ່' } },
+			{ lo: { wrd: 'ສະບາຍດີ' } },
+			{ lo: { wrd: 'ເຈົ້າ' } },
+			{ lo: { wrd: 'ຂອບໃຈ' } }
+		], 'lo.wrd');
+		assert.deepEqual(orderedItems, [
+			{ lo: { wrd: 'ຂອບໃຈ' } },
+			{ lo: { wrd: 'ເຈົ້າ' } },
+			{ lo: { wrd: 'ສະບາຍດີ' } },
+			{ lo: { wrd: 'ບໍ່' } }
+		]);
+	}
 }
-
-
-
-
-

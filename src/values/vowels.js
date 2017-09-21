@@ -42,8 +42,8 @@ var vowels = {
     xຸ: { en: 'oo', fr: 'ou', ph: 'u' },
     xຸx: { en: 'oo', fr: 'ou', ph: 'u' },
     // aj
-    ໄx: { en: 'ai', fr: 'ay', ph: 'aj' },
-    ໃx: { en: 'ai', fr: 'ay', ph: 'aj' },
+    ໄx: { en: 'ai', fr: 'ay', ph: 'ay' },
+    ໃx: { en: 'ai', fr: 'ay', ph: 'ay' },
     // am
     xຳ: { en: 'am', fr: 'âm', ph: 'am' },
     xໍາ: { en: 'am', fr: 'âm', ph: 'am' },

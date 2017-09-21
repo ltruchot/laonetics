@@ -9,7 +9,7 @@ var consonants = {
     ຈ: { leading: { en: 'ch', fr: 'tj', ph: 'tɕ' } },
     ສ: { leading: { en: 's', fr: 's', ph: 's' } },
     ຊ: { leading: { en: 's', fr: 's', ph: 's' } },
-    ຍ: { leading: { en: 'ny', fr: 'ny', ph: 'ɲ' }, trailing: { en: 'i', fr: 'y', ph: 'ɲ' } },
+    ຍ: { leading: { en: 'ny', fr: 'ny', ph: 'ɲ' }, trailing: { en: 'i', fr: 'y', ph: 'y' } },
     ດ: { leading: { en: 'd', fr: 'd', ph: 'd' }, trailing: { en: 'd', fr: 't', ph: 'd' } },
     ຕ: { leading: { en: 't', fr: 't', ph: 't' } },
     ຖ: { leading: { en: 'th', fr: 'th', ph: 'tʰ' } },
