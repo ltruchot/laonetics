@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "experimentalDecorators": true,
     "target": "es5",
     "allowJs": false,
     "declaration": true,
@@ -17,12 +16,6 @@
     "sourceMap": true
   },
   "include": [
-    "./src"
-  ],
-  "exclude": [
-    "./node_modules",
-    "./dist",
-    "./demo",
-    "./test"
+    "./src/laonetics.ts"
   ]
 }

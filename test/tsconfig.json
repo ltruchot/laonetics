@@ -1,12 +1,22 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
+    "outDir": "./builded-tests",
     "target": "es5",
     "module": "commonjs",
-    "sourceMap": true,
     "experimentalDecorators": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "removeComments": true,
     "lib": [
-      "es2015",
+      "es6",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "./test.ts"
+  ]
 }
+
+

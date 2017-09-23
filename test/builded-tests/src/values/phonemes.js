@@ -1,25 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// exported graphemes
 var graphemes = {
     accents: '່້໊໋໌',
     authorizedAccents: '່້',
     phantoms: '\\u200B\\u2022\\s\.\,,\-',
-    cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
+    cLeading: 'ກຂຄງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
     cTrailing: 'ງກມນຍວດບ',
-    cຫ: 'ຫ[ງຍນມລວຼ]',
-    cຂ: 'ຂວ',
-    cຄ: 'ຄວ',
+    cຫ: 'ຫ[ງຍນມລຼ]',
+    cAmbiguousຫ: 'ຫວ',
+    cAmbiguousຂວຄວ: 'ຂວ|ຄວ',
     vFollow: 'ໍິີຶືຸູາ',
     vLeft: 'ແເໂ',
     vLeftSpecial: 'ໄໃ',
-    vFollowComplement: 'ະ\\u0EB3',
+    vFollowComplement: 'ະ\\u0EB3'
 };
 exports.graphemes = graphemes;
 var preRegs = {
-    cSpecial: "(" + graphemes.cຫ + "|" + graphemes.cຂ + "|" + graphemes.cຄ + ")",
+    cSpecial: "(" + graphemes.cAmbiguousຂວຄວ + "|" + graphemes.cຫ + ")"
 };
-// exported regs
 var regs = {
     boundary: "(?![" + graphemes.vFollow + graphemes.vFollowComplement + "\u0EBD\u0EB1\u0EBB])",
     leadingAll: "(" + preRegs.cSpecial + "|[" + graphemes.cLeading + "])",
@@ -29,12 +27,16 @@ var regs = {
 exports.regs = regs;
 var regInstances = {
     removables: new RegExp("[" + graphemes.phantoms + "]+", 'g'),
-    cSpecial: new RegExp("" + preRegs.cSpecial),
+    specialຫ: new RegExp("" + graphemes.cຫ),
+    ambiguousຫ: new RegExp("" + graphemes.cAmbiguousຫ),
+    ambiguousຂວຄວ: new RegExp("(" + graphemes.cAmbiguousຂວຄວ + ")"),
+    disambiguatedຫວ: new RegExp(graphemes.cAmbiguousຫ + "[" + graphemes.cTrailing + "]" + regs.boundary),
+    disambiguatedຂວຄວ: new RegExp("(" + graphemes.cAmbiguousຂວຄວ + ")[" + graphemes.cTrailing + "]" + regs.boundary),
     cAlone: new RegExp("([" + graphemes.cLeading + "]{2,})", 'g'),
-    accents: new RegExp("" + regs.accents, 'g'),
+    cSpecial: new RegExp("" + preRegs.cSpecial),
+    accents: new RegExp("" + regs.accents, 'g')
 };
 exports.regInstances = regInstances;
-// exported phonemes
 var phonemes = [
     {
         location: 'onlyFollow3',

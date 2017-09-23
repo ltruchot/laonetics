@@ -1,23 +1,23 @@
 import {
-	LaoneticsTranslater,
-	consonants,
-	IConsonant,
 	ISlicedSyllables,
-	IPhonetics
+	LaoneticsSorter,
+	LaoneticsTranslater,
+	consonants
 } from './../../../src/laonetics';
 
 $(document).ready(() => {
-	const allConsonants = Object.keys(consonants);
+	const allConsonants: string[] = Object.keys(consonants);
 	const ddlConsonants = $('#ddl-consonants');
 	const btnDdlConsonants = $('#btn-ddl-consonants');
-	allConsonants.forEach(item => {
+	allConsonants.forEach((item: string) => {
 		ddlConsonants.append(`<a class="dropdown-item" href="#">${item}</a>`);
 	});
-	ddlConsonants.on('click', 'a', event => {
+	ddlConsonants.on('click', 'a', (event: Event) => {
 		btnDdlConsonants.text($(event.target).text());
 	});
 
 	const translater = new LaoneticsTranslater();
+	const sorter = new LaoneticsSorter();
 
 	const htmlIn: JQuery = $('#in');
 	const htmlOutLo: JQuery = $('#out-lo');
@@ -43,23 +43,31 @@ $(document).ready(() => {
 	btnReset.on('click', reset);
 	btnGenerate.on('click', generate);
 
-	cbLo.on('click', event => {
+	cbLo.on('click', () => {
 		blockLo.toggle();
-	})
-	cbFr.on('click', event => {
+	});
+	cbFr.on('click', () => {
 		blockFr.toggle();
-	})
-	cbEn.on('click', event => {
+	});
+	cbEn.on('click', () => {
 		blockEn.toggle();
-	})
-	cbPh.on('click', event => {
+	});
+	cbPh.on('click', () => {
 		blockPh.toggle();
-	})
+	});
+
+	const htmlSorterIn: JQuery = $('#sorter-in');
+	const btnSort: JQuery = $('#btn-sort');
+	btnSort.on('click', () => {
+		const words = htmlSorterIn.val().split(new RegExp(/\s+/));
+		sorter.sortArrayByConsonant(words);
+		htmlSorterIn.val(words.join(' '));
+	});
 
 	function romanize () {
 		displayLoading();
-		let laoSentence = htmlIn.val();
-		let slicedSyllables: ISlicedSyllables = translater.getKaraoke(laoSentence, ['fr', 'en', 'ph']);
+		const laoSentence = htmlIn.val();
+		const slicedSyllables: ISlicedSyllables = translater.getKaraoke(laoSentence, ['fr', 'en', 'ph']);
 		htmlOutLo.html(slicedSyllables.lao.join(' '));
 		htmlOutFr.html(slicedSyllables.roms[0].join(' '));
 		htmlOutEn.html(slicedSyllables.roms[1].join(' '));

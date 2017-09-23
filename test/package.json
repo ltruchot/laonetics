@@ -1,12 +1,11 @@
 {
   "name": "laonetics-test",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "main": "test.js",
   "scripts": {
     "pretest": "tsc",
-    "test": "nyc mocha",
-    "watch": "mocha-typescript-watch",
+    "test": "rm -rf builded-tests && mocha-typescript-watch -o mocha.opts",
     "prepare": "tsc",
     "update": "rm -rf node_modules && npm cache verify && npm i"
   },

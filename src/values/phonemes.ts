@@ -1,24 +1,24 @@
 // dependencies
-import { IPhonemeReg } from './../interfaces/interfaces';
+import { IPhonemeReg, IRegInstances } from './../interfaces/interfaces';
 
 // exported graphemes
 const graphemes: any = {
 	accents: '່້໊໋໌',
 	authorizedAccents: '່້',
 	phantoms: '\\u200B\\u2022\\s\.\,,\-', // word boundaries and punctuation, visible or not in editors
-	cLeading: 'ກຄຂງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
+	cLeading: 'ກຂຄງຈສຊຍດຕຖທນບປຜຝພຟມຢຣລວຫອຮໝໜ',
 	cTrailing: 'ງກມນຍວດບ',
-	cຫ: 'ຫ[ງຍນມລວຼ]',
-	cຂ: 'ຂວ',
-	cຄ: 'ຄວ',
+	cຫ: 'ຫ[ງຍນມລຼ]',
+	cAmbiguousຫ: 'ຫວ',
+	cAmbiguousຂວຄວ: 'ຂວ|ຄວ',
 	vFollow: 'ໍິີຶືຸູາ',
 	vLeft: 'ແເໂ',
 	vLeftSpecial: 'ໄໃ',
-	vFollowComplement: 'ະ\\u0EB3', // 2nd one is a special form of lao grapheme "am", invisible in editors
+	vFollowComplement: 'ະ\\u0EB3' // 2nd one is a special form of lao grapheme "am", invisible in editors
 };
 const preRegs: any = {
-	cSpecial: `(${graphemes.cຫ}|${graphemes.cຂ}|${graphemes.cຄ})`,
-}
+	cSpecial: `(${graphemes.cAmbiguousຂວຄວ}|${graphemes.cຫ})`
+};
 
 // exported regs
 const regs: any = {
@@ -26,17 +26,22 @@ const regs: any = {
 	leadingAll: `(${preRegs.cSpecial}|[${graphemes.cLeading}])`,
 	follow1Only: `[${graphemes.vFollow}${graphemes.vFollowComplement}]`,
 	accents: `[${graphemes.authorizedAccents}]`
-}
+};
 
-const regInstances: any = {
+const regInstances: IRegInstances = {
 	removables: new RegExp(`[${graphemes.phantoms}]+`, 'g'),
-	cSpecial: new RegExp(`${preRegs.cSpecial}`),
+	specialຫ: new RegExp(`${graphemes.cຫ}`),
+	ambiguousຫ: new RegExp(`${graphemes.cAmbiguousຫ}`),
+	ambiguousຂວຄວ: new RegExp(`(${graphemes.cAmbiguousຂວຄວ})`),
+	disambiguatedຫວ: new RegExp(`${graphemes.cAmbiguousຫ}[${graphemes.cTrailing}]${regs.boundary}`),
+	disambiguatedຂວຄວ: new RegExp(`(${graphemes.cAmbiguousຂວຄວ})[${graphemes.cTrailing}]${regs.boundary}`),
 	cAlone: new RegExp(`([${graphemes.cLeading}]{2,})`, 'g'),
-	accents: new RegExp(`${regs.accents}`, 'g'),
+	cSpecial: new RegExp(`${preRegs.cSpecial}`),
+	accents: new RegExp(`${regs.accents}`, 'g')
 };
 
 // exported phonemes
-const phonemes: Array<IPhonemeReg> = [
+const phonemes: IPhonemeReg[] = [
 	{
 		location: 'onlyFollow3',
 		reg: `${regs.leadingAll}${regs.accents}?ົ${regs.accents}?ວ${regs.accents}?ະ${regs.accents}?`,

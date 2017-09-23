@@ -1,6 +1,6 @@
 {
   "name": "laonetics",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "CC-BY-NC-4.0",
   "author": "Loïc TRUCHOT <loic.truchot.pro@gmail.com> (http://laonetics.io)",
   "description": "Get Lao language IPA phonetics and romanization, french and english karaoke for any phoneme/syllable.",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "ts-loader": "^2.2.1",
     "tslint": "^5.4.3",
+    "tslint-consistent-codestyle": "^1.6.0",
     "typescript": "^2.4.1",
     "typings": "^2.1.1",
     "webpack": "^3.0.0",

@@ -16,7 +16,6 @@ module.exports = {
     // Add '.ts' as a resolvable extension.
     extensions: ['.ts', '.js']
   },
-
   module: {
     loaders: [
       // all files with a '.ts'  extension will be handled by `ts-loader`

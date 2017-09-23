@@ -10,9 +10,11 @@ var mocha_typescript_1 = require("mocha-typescript");
 var chai_1 = require("chai");
 var laonetics_1 = require("./../src/laonetics");
 var simples_1 = require("./valid/simples");
+var wordsToSort_1 = require("./valid/wordsToSort");
 var Try = (function () {
     function Try() {
         this.translater = new laonetics_1.LaoneticsTranslater();
+        this.sorter = new laonetics_1.LaoneticsSorter();
         this.allກ = this.translater.getPhonemesByConsonant('ກ');
         this.allກAsStr = this.allກ.join('');
     }
@@ -63,22 +65,12 @@ var Try = (function () {
         });
     };
     Try.prototype['Check lao aphabetical orderers'] = function () {
-        var orderedConsonants = this.translater.sortArrayByConsonant(['ວ', 'ຂ', 'ກ', 'ຄ']);
-        chai_1.assert.deepEqual(orderedConsonants, ['ກ', 'ຄ', 'ຂ', 'ວ']);
-        var oreredWords = this.translater.sortArrayByConsonant(['ບໍ່', 'ສະບາຍດີ', 'ເຈົ້າ', 'ຂອບໃຈ']);
-        chai_1.assert.deepEqual(oreredWords, ['ຂອບໃຈ', 'ເຈົ້າ', 'ສະບາຍດີ', 'ບໍ່']);
-        var orderedItems = this.translater.sortCollectionByConsonant([
-            { lo: { wrd: 'ບໍ່' } },
-            { lo: { wrd: 'ສະບາຍດີ' } },
-            { lo: { wrd: 'ເຈົ້າ' } },
-            { lo: { wrd: 'ຂອບໃຈ' } }
-        ], 'lo.wrd');
-        chai_1.assert.deepEqual(orderedItems, [
-            { lo: { wrd: 'ຂອບໃຈ' } },
-            { lo: { wrd: 'ເຈົ້າ' } },
-            { lo: { wrd: 'ສະບາຍດີ' } },
-            { lo: { wrd: 'ບໍ່' } }
-        ]);
+        var orderedConsonants = this.sorter.sortArrayByConsonant(wordsToSort_1.wordsToSort.consonants.unsorted);
+        chai_1.assert.deepEqual(orderedConsonants, wordsToSort_1.wordsToSort.consonants.sorted);
+        var oreredWords = this.sorter.sortArrayByConsonant(wordsToSort_1.wordsToSort.words.unsorted);
+        chai_1.assert.deepEqual(oreredWords, wordsToSort_1.wordsToSort.words.sorted);
+        var orderedItems = this.sorter.sortArrayByConsonant(wordsToSort_1.wordsToSort.items.unsorted, 'lo.wrd');
+        chai_1.assert.deepEqual(orderedItems, wordsToSort_1.wordsToSort.items.sorted);
     };
     __decorate([
         mocha_typescript_1.test

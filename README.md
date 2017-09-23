@@ -6,10 +6,9 @@ Laonetics is a Typescript/Javascript component to convert lao chars in english/f
 
 Install: `npm install --save laonetics`
 
-Import: `import { LaoneticsTranslater, ISlicedSyllables } from 'laonetics';`
-
-Use:
+Use with Typescript:
 ```typescript
+import { LaoneticsTranslater, ISlicedSyllables } from 'laonetics';
 const translater = new LaoneticsTranslater();
 // exemple with rabbit word in lao: "ກະຕ່າຍ"
 let slicedSyllables: ISlicedSyllables = translater.getKaraoke('ກະຕ່າຍ', ['fr', 'en', 'ph']);
@@ -26,8 +25,14 @@ let slicedSyllables: ISlicedSyllables = translater.getKaraoke('ກະຕ່າ�
 ]
 */
 ```
+Or use with JavaScript:
+```javascript
+const laonetics = require("laonetics");
+const translater = new laonetics.LaoneticsTranslater();
+let slicedSyllables = translater.getKaraoke('ກະຕ່າຍ', ['fr', 'en', 'ph']);
+```
 
-Current version: Beta v0.4.1 "Smart lao language karaoke".
+Current version: Beta v0.4.2 "Smart lao language karaoke".
 
 Demo running here: [laonetics.io](http://laonetics.io)
 
