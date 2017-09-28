@@ -23,7 +23,7 @@ const consonants: any = {
 	ຢ: { leading: { en: 'y', fr: 'y', ph: 'j' } },
 	ຣ: { leading: { en: 'l', fr: 'l', ph: 'r' } },
 	ລ: { leading: { en: 'l', fr: 'l', ph: 'l' } },
-	ວ: { leading: { en: 'v', fr: 'v', ph: 'ʋ' }, trailing: { en: 'w', fr: 'w', ph: 'w' } },
+	ວ: { leading: { en: 'v', fr: 'v', ph: 'ʋ' }, trailing: { en: 'w', fr: 'o', ph: 'w' } },
 	ອ: { leading: { en: '', fr: '', ph: 'ʔ' } },
 	ຫ: { leading: { en: 'h', fr: 'h', ph: 'h' } },
 	ຮ: { leading: { en: 'h', fr: 'h', ph: 'h' } },

@@ -32,7 +32,7 @@ const translater = new laonetics.LaoneticsTranslater();
 let slicedSyllables = translater.getKaraoke('ກະຕ່າຍ', ['fr', 'en', 'ph']);
 ```
 
-Current version: Beta v0.4.2 "Smart lao language karaoke".
+Current version: Beta v0.4.3 "Smart lao language karaoke".
 
 Demo running here: [laonetics.io](http://laonetics.io)
 

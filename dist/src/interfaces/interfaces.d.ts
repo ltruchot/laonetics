@@ -9,12 +9,23 @@ export interface IConsonant {
     trailing?: IPhonetics;
 }
 export interface ISlicedSyllables {
-    lao: Array<string>;
-    roms: Array<Array<string>>;
+    lao: string[];
+    roms: string[][];
 }
 export interface IPhonemeReg {
     location: string;
     reg: string;
     charNbr: number;
     noAccent: string;
+}
+export interface IRegInstances {
+    accents: RegExp;
+    specialຫ: RegExp;
+    ambiguousຫ: RegExp;
+    ambiguousຂວຄວ: RegExp;
+    disambiguatedຫວ: RegExp;
+    disambiguatedຂວຄວ: RegExp;
+    cAlone: RegExp;
+    cSpecial: RegExp;
+    removables: RegExp;
 }
